@@ -1,7 +1,7 @@
 {
   "name": "vue-element-admin-itheima",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "vue-element-admin 商用管理系统模板",
   "author": "taoshiwei <taoshiwei@itcast.cn>",
   "private": true,
   "scripts": {
@@ -11,10 +11,19 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "art:create": "mkdir src/module-${module} && mkdir src/module-${module}/assets && mkdir src/module-${module}/components && mkdir src/module-${module}/pages && mkdir src/module-${module}/router && mkdir src/module-${module}/store"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "element-ui": "^2.2.2",
+    "font-awesome": "^4.7.0",
+    "js-cookie": "^2.2.0",
+    "normalize.css": "^8.0.0",
+    "nprogress": "^0.2.0",
+    "screenfull": "^3.3.2",
     "vue": "^2.5.2",
+    "vue-i18n": "^7.6.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
