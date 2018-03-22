@@ -30,7 +30,10 @@ export default {
           if (this.top < -($wrapperHeight - $containerHeight + delta)) {
             this.top = this.top
           } else {
-            this.top = Math.max(this.top + eventDelta, $containerHeight - $wrapperHeight - delta)
+            this.top = Math.max(
+              this.top + eventDelta,
+              $containerHeight - $wrapperHeight - delta
+            )
           }
         } else {
           this.top = 0
@@ -51,7 +54,7 @@ export default {
   background-color: $menuBg;
   .scroll-wrapper {
     position: absolute;
-     width: 100%!important;
+    width: 100% !important;
   }
 }
 </style>

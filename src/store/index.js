@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import app from '@/src/module-dashboard/store/app'
-import errorLog from '@/src/module-dashboard/store/errorLog'
-import permission from '@/src/module-dashboard/store/permission'
-import tagsView from '@/src/module-dashboard/store/tagsView'
-import user from '@/src/module-dashboard/store/user'
+import app from '@/module-dashboard/store/app'
+import errorLog from '@/module-dashboard/store/errorLog'
+import permission from '@/module-dashboard/store/permission'
+import tagsView from '@/module-dashboard/store/tagsView'
+import user from '@/module-dashboard/store/user'
 import getters from './getters'
 
 Vue.use(Vuex)
