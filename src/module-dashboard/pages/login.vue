@@ -41,7 +41,7 @@
       <br/>
       <br/>
       <br/>
-      <social-sign />
+      <login-social-sign />
     </el-dialog>
 
   </div>
@@ -50,10 +50,10 @@
 <script>
 import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
-import SocialSign from './components/socialsignin'
+import loginSocialSign from './../components/loginSocialsignin'
 
 export default {
-  components: { LangSelect, SocialSign },
+  components: { LangSelect, loginSocialSign },
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {

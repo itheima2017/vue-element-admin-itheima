@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, TagsView } from './components'
+import { Navbar, Sidebar, AppMain, TagsView } from './../components/layoutIndex'
 
 export default {
   name: 'layout',

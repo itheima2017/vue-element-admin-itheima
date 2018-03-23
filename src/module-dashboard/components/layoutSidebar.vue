@@ -8,7 +8,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import SidebarItem from './SidebarItem'
+import SidebarItem from './layoutSidebarItem'
 import ScrollBar from '@/components/ScrollBar'
 
 export default {

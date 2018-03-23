@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/module-dashboard/views/layout'
+import Layout from '@/module-dashboard/pages/layout'
 const _import = require('./_import_' + process.env.NODE_ENV)
 
 Vue.use(Router)
 
-/** note: submenu only apppear when children.length>=1
- *   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
- **/
-
 /**
+ * 基础路由
+ * 
+ * 
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
 * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
 *                                if not set alwaysShow, only more than one route under the children
@@ -46,7 +45,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'dashboard',
         meta: {title: 'dashboard', icon: 'dashboard', noCache: true}
       }
@@ -60,6 +59,10 @@ export default new Router({
   routes: constantRouterMap
 })
 
+/**
+ * 业务路由
+ * 
+**/
 export const asyncRouterMap = [
   {
     path: '/permission',
@@ -69,7 +72,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'index',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'permission',
         meta: {
           title: 'permission',
@@ -85,7 +88,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'index',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'icons',
         meta: {title: 'icons', icon: 'icon', noCache: true}
       }
@@ -104,25 +107,25 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'tinymce',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'tinymce-demo',
         meta: {title: 'tinymce'}
       },
       {
         path: 'markdown',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'markdown-demo',
         meta: {title: 'markdown'}
       },
       {
         path: 'json-editor',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'jsonEditor-demo',
         meta: {title: 'jsonEditor'}
       },
       {
         path: 'dnd-list',
-        component: _import('dashboard/views/index'),
+        component: _import('dashboard/pages/bashboard'),
         name: 'dndList-demo',
         meta: {title: 'dndList'}
       }
