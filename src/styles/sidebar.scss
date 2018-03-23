@@ -48,6 +48,9 @@
         opacity: 0;
         display: inline-block;
       }
+      .svg-icon {
+        margin-left: -10px;
+      }
       &:hover {
         span {
           display: block;

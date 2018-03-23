@@ -1,4 +1,4 @@
-import { frame } from '@/api/base'
+import { frame } from '@/api'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
