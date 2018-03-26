@@ -12,6 +12,7 @@ import SidebarItem from './layoutSidebarItem'
 import ScrollBar from '@/components/ScrollBar'
 
 export default {
+  name: 'layoutSidebar',
   components: {SidebarItem, ScrollBar},
   computed: {
     ...mapGetters(['permission_routers', 'sidebar']),

@@ -35,7 +35,7 @@
 import { generateTitle } from '@/utils/i18n'
 
 export default {
-  name: 'SidebarItem',
+  name: 'layoutSidebarItem',
   props: {
     routes: {
       type: Array

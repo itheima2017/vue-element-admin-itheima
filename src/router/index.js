@@ -25,12 +25,12 @@ Vue.use(Router)
 export const constantRouterMap = [
   {
     path: '/login',
-    component: _import('dashboard/views/login'),
+    component: _import('dashboard/pages/login'),
     hidden: true
   },
   {
     path: '/authredirect',
-    component: _import('dashboard/views/authredirect'),
+    component: _import('dashboard/pages/authredirect'),
     hidden: true
   },
   {
@@ -45,7 +45,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'dashboard',
         meta: {title: 'dashboard', icon: 'dashboard', noCache: true}
       }
@@ -72,7 +72,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'index',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'permission',
         meta: {
           title: 'permission',
@@ -88,7 +88,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'index',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'icons',
         meta: {title: 'icons', icon: 'icon', noCache: true}
       }
@@ -107,25 +107,25 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'tinymce',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'tinymce-demo',
         meta: {title: 'tinymce'}
       },
       {
         path: 'markdown',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'markdown-demo',
         meta: {title: 'markdown'}
       },
       {
         path: 'json-editor',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'jsonEditor-demo',
         meta: {title: 'jsonEditor'}
       },
       {
         path: 'dnd-list',
-        component: _import('dashboard/pages/bashboard'),
+        component: _import('dashboard/pages/dashboard'),
         name: 'dndList-demo',
         meta: {title: 'dndList'}
       }

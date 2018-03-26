@@ -20,6 +20,7 @@ import ScrollPane from '@/components/ScrollPane'
 import {generateTitle} from '@/utils/i18n'
 
 export default {
+  name: 'layoutTags',
   components: {ScrollPane},
   data() {
     return {

@@ -1,24 +1,27 @@
 <template>
 	<div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-		<sidebar class="sidebar-container"></sidebar>
+		<layout-sidebar class="sidebar-container"></layout-sidebar>
 		<div class="main-container">
-			<navbar></navbar>
-			<tags-view></tags-view>
-			<app-main></app-main>
+			<layout-navbar></layout-navbar>
+			<layout-tags></layout-tags>
+			<layout-app-main></layout-app-main>
 		</div>
 	</div>
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain, TagsView } from './../components/layoutIndex'
+import layoutNavbar from './../components/layoutNavbar'
+import layoutSidebar from './../components/layoutSidebar'
+import layoutTags from './../components/layoutTags'
+import layoutAppMain from './../components/layoutAppMain'
 
 export default {
   name: 'layout',
   components: {
-    Navbar,
-    Sidebar,
-    AppMain,
-    TagsView
+    layoutNavbar,
+    layoutSidebar,
+    layoutTags,
+    layoutAppMain
   },
   computed: {
     sidebar() {

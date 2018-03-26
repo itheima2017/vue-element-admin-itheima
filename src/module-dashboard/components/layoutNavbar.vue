@@ -52,6 +52,7 @@ import LangSelect from '@/components/LangSelect'
 import ThemePicker from '@/components/ThemePicker'
 
 export default {
+  name: 'layoutNavBar',
   components: {
     Breadcrumb,
     Hamburger,
