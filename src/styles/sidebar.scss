@@ -29,7 +29,7 @@
   .hideSidebar {
     .sidebar-container,.sidebar-container .el-menu {
       width: 36px!important;
-      // overflow: inherit;
+      overflow: inherit;
     }
     .main-container {
       margin-left: 36px;
@@ -69,9 +69,15 @@
         }
       }
     }
+    .el-menu-item {
+      padding-left: 6px!important;
+      &>.el-tooltip {
+        padding-left: 6px!important;
+      }
+    }
     .el-submenu {
       &>.el-submenu__title {
-        padding-left: 10px!important;
+        padding-left: 6px!important;
         &>span {
           display: none;
         }
