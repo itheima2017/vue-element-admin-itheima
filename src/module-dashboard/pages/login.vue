@@ -51,6 +51,7 @@
 import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import loginSocialSignin from './../components/loginSocialSignin'
+import shajs from 'sha.js'
 
 export default {
   components: { LangSelect, loginSocialSignin },
@@ -96,7 +97,10 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUsername', {
+            'username': this.loginForm.username,
+            'password': shajs('sha256').update(this.loginForm.password).digest('hex')
+          }).then(() => {
             this.loading = false
             this.$router.push({ path: '/' })
           }).catch(() => {

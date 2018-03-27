@@ -6,7 +6,7 @@ export const DashboardRouter = [
     path: '/base',
     component: Layout,
     redirect: 'noredirect',
-    name: 'base-manage',
+    name: 'base',
     meta: {
       title: 'manage',
       icon: 'component'

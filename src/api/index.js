@@ -66,7 +66,13 @@ instance.interceptors.response.use(
   }
 )
 
-const createAPI = (url, method, config) => {
+const createAPI = (url, method, data) => {
+  let config = {}
+  if (method === 'get') {
+    config.params = data
+  } else {
+    config.data = data
+  }
   config = config || {}
   return instance({
     url,
@@ -96,11 +102,11 @@ const createFormAPI = (url, method, config) => {
 }
 
 const frame = {
-  login: config => createAPI('/base/frame/login', 'post', config),
-  register: config => createAPI('/base/frame/register', 'post', config),
-  logout: config => createAPI('/base/frame/logout', 'post', config),
-  passwd: config => createAPI('/base/frame/passwd', 'post', config),
-  profile: config => createAPI('/base/frame/profile', 'post', config)
+  login: data => createAPI('/base/frame/login', 'post', data),
+  register: data => createAPI('/base/frame/register', 'post', data),
+  logout: data => createAPI('/base/frame/logout', 'post', data),
+  passwd: data => createAPI('/base/frame/passwd', 'post', data),
+  profile: data => createAPI('/base/frame/profile', 'post', data)
 }
 
 const users = {}
