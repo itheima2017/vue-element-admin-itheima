@@ -1,9 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/module-dashboard/pages/layout'
+// 导入路由规则
+import {DashboardRouter} from '@/module-dashboard/router'
+
 const _import = require('./_import_' + process.env.NODE_ENV)
 
 Vue.use(Router)
+
+/**
+ * 业务路由
+ *
+ **/
+let routerMap = [
+  { path: '*', redirect: '/404', hidden: true }
+]
+let concat = bllRouter => {
+  routerMap = routerMap.concat(bllRouter)
+}
+// 合并路由规则
+concat(DashboardRouter) // 面板
+export const asyncRouterMap = routerMap
 
 /**
  * 基础路由
@@ -24,8 +41,8 @@ Vue.use(Router)
 **/
 export const constantRouterMap = [
   {
-    path: '/login',
-    component: _import('dashboard/pages/login'),
+    path: '/login', 
+    component: _import('dashboard/pages/login'), 
     hidden: true
   },
   {
@@ -33,11 +50,8 @@ export const constantRouterMap = [
     component: _import('dashboard/pages/authredirect'),
     hidden: true
   },
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
-  },
+  {path: '/404', component: _import('dashboard/pages/404'), hidden: true},
+  {path: '/401', component: _import('dashboard/pages/401'), hidden: true},
   {
     path: '',
     component: Layout,
@@ -58,77 +72,3 @@ export default new Router({
   scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap
 })
-
-/**
- * 业务路由
- * 
-**/
-export const asyncRouterMap = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/index',
-    meta: {roles: ['admin']}, // you can set roles in root nav
-    children: [
-      {
-        path: 'index',
-        component: _import('dashboard/pages/dashboard'),
-        name: 'permission',
-        meta: {
-          title: 'permission',
-          icon: 'lock'
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: _import('dashboard/pages/dashboard'),
-        name: 'icons',
-        meta: {title: 'icons', icon: 'icon', noCache: true}
-      }
-    ]
-  },
-
-  {
-    path: '/components',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'component-demo',
-    meta: {
-      title: 'components',
-      icon: 'component'
-    },
-    children: [
-      {
-        path: 'tinymce',
-        component: _import('dashboard/pages/dashboard'),
-        name: 'tinymce-demo',
-        meta: {title: 'tinymce'}
-      },
-      {
-        path: 'markdown',
-        component: _import('dashboard/pages/dashboard'),
-        name: 'markdown-demo',
-        meta: {title: 'markdown'}
-      },
-      {
-        path: 'json-editor',
-        component: _import('dashboard/pages/dashboard'),
-        name: 'jsonEditor-demo',
-        meta: {title: 'jsonEditor'}
-      },
-      {
-        path: 'dnd-list',
-        component: _import('dashboard/pages/dashboard'),
-        name: 'dndList-demo',
-        meta: {title: 'dndList'}
-      }
-    ]
-  }
-]
