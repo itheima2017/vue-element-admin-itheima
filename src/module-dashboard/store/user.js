@@ -1,4 +1,4 @@
-import { frame } from '@/api'
+import { login, logout, profile } from '@/api/frame'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -48,8 +48,7 @@ const user = {
     LoginByUsername({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        debugger
-        frame.login({
+        login({
             username: username,
             password: userInfo.password
           }).then(response => {
@@ -66,7 +65,7 @@ const user = {
     // 获取用户信息
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        frame.profile().then(response => {
+        profile().then(response => {
           const data = response.data
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.name)
@@ -96,7 +95,7 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        frame.logout().then(() => {
+        logout().then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()

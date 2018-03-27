@@ -12,7 +12,7 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
-    "art:create": "mkdir src/module-${module} && mkdir src/module-${module}/assets && mkdir src/module-${module}/pages && mkdir src/module-${module}/views/index/components && mkdir src/module-${module}/router && mkdir src/module-${module}/store"
+    "art:create": "mkdir src/module-${module} && mkdir src/module-${module}/assets && mkdir src/module-${module}/pages && mkdir src/module-${module}/components && mkdir src/module-${module}/router && mkdir src/module-${module}/store"
   },
   "dependencies": {
     "axios": "^0.18.0",

@@ -1,7 +1,11 @@
 /**
- * Created by jiachenpan on 16/11/18.
+ * 解析时间
+ * 
+ * @export
+ * @param {any} time 
+ * @param {any} cFormat 
+ * @returns 
  */
-
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -36,6 +40,14 @@ export function parseTime(time, cFormat) {
   return timeStr
 }
 
+/**
+ * 格式化时间
+ * 
+ * @export
+ * @param {any} time 
+ * @param {any} option 
+ * @returns 
+ */
 export function formatTime(time, option) {
   time = +time * 1000
   const d = new Date(time)

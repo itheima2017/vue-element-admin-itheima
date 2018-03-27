@@ -4,13 +4,13 @@ import store from '@/store'
 import {getToken} from '@/utils/auth'
 
 // create an axios instance
-const service = axios.create({
+const instance = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 5000 // request timeout
 })
 
 // request interceptor
-service.interceptors.request.use(
+instance.interceptors.request.use(
   config => {
     // Do something before request is sent
     if (store.getters.token) {
@@ -26,7 +26,7 @@ service.interceptors.request.use(
 )
 
 // respone interceptor
-service.interceptors.response.use(
+instance.interceptors.response.use(
   response => response,
   /**
    * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
@@ -66,26 +66,14 @@ service.interceptors.response.use(
   }
 )
 
-export function createAPI (url, method, config) {
+export const createAPI = (url, method, data) => {
+  let config = {}
+  if (method === 'get') {
+    config.params = data
+  } else {
+    config.data = data
+  }
   config = config || {}
-  return instance({
-    url,
-    method,
-    ...config
-  })
-}
-export function createFormAPI (url, method, config) {
-  config = config || {}
-  config.headers['Cache-Control'] = 'no-cache'
-  config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-  config.responseType = 'json'
-  config.transformRequest = [function (data) {
-    let ret = ''
-    for (let it in data) {
-      ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-    }
-    return ret
-  }]
   return instance({
     url,
     method,
@@ -93,4 +81,23 @@ export function createFormAPI (url, method, config) {
   })
 }
 
-export default service
+export const createFormAPI = (url, method, config) => {
+  config = config || {}
+  config.headers['Cache-Control'] = 'no-cache'
+  config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+  config.responseType = 'json'
+  config.transformRequest = [
+    function(data) {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }
+  ]
+  return instance({
+    url,
+    method,
+    ...config
+  })
+}
