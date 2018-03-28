@@ -1,30 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
+import {Message} from 'element-ui'
+import NProgress from 'nprogress'
 import Layout from '@/module-dashboard/pages/layout'
-// 导入路由规则
+import {getToken} from '@/utils/auth'
+import {hasPermissionPoint, hasPermission} from '@/utils/permission'
+
+// 导入模块路由
 import {DashboardRouter} from '@/module-dashboard/router'
 
-const _import = require('./_import_' + process.env.NODE_ENV)
+// 定义
+const _import = require('./_import_' + process.env.NODE_ENV) // 懒加载 导包
+const whiteList = ['/login', '/authredirect'] // 白名单 无需跳转
+let routerMap = [] // 业务路由
 
+// 配置
 Vue.use(Router)
+NProgress.configure({showSpinner: false}) // NProgress Configuration
 
 /**
- * 业务路由
- *
+ * 合并业务路由
  **/
-let routerMap = [
-  { path: '*', redirect: '/404', hidden: true }
-]
-let concat = bllRouter => {
-  routerMap = routerMap.concat(bllRouter)
-}
-// 合并路由规则
-concat(DashboardRouter) // 面板
+routerMap = routerMap.concat(DashboardRouter) // 面板
 export const asyncRouterMap = routerMap
 
 /**
  * 基础路由
- * 
  * 
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
 * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
@@ -41,8 +43,8 @@ export const asyncRouterMap = routerMap
 **/
 export const constantRouterMap = [
   {
-    path: '/login', 
-    component: _import('dashboard/pages/login'), 
+    path: '/login',
+    component: _import('dashboard/pages/login'),
     hidden: true
   },
   {
@@ -52,6 +54,7 @@ export const constantRouterMap = [
   },
   {path: '/404', component: _import('dashboard/pages/404'), hidden: true},
   {path: '/401', component: _import('dashboard/pages/401'), hidden: true},
+  {path: '*', redirect: '/404', hidden: true},
   {
     path: '',
     component: Layout,
@@ -67,8 +70,64 @@ export const constantRouterMap = [
   }
 ]
 
-export default new Router({
+/**
+ * 配置路由
+ **/
+let router = new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({y: 0}),
   routes: constantRouterMap
 })
+
+router.beforeEach((to, from, next) => {
+  NProgress.start() // start progress bar
+  if (getToken()) {
+    // determine if there has token
+    /* has token */
+    if (to.path === '/login') {
+      next({path: '/'})
+      NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
+    } else {
+      if (store.getters.roles.length === 0) {
+        // 判断当前用户是否已拉取完user_info信息
+        store
+          .dispatch('GetUserInfo')
+          .then(res => {
+            // 拉取user_info
+            const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
+            store.dispatch('GenerateRoutes', {roles}).then(() => {
+              // 根据roles权限生成可访问的路由表
+              router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+              next({...to, replace: true}) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+            })
+          })
+          .catch(() => {
+            store.dispatch('FedLogOut').then(() => {
+              Message.error('验证失败, 请重新登录')
+              next({path: '/login'})
+            })
+          })
+      } else {
+        next()
+      }
+    }
+  } else {
+    /* has no token */
+    if (whiteList.indexOf(to.path) !== -1) {
+      // 在免登录白名单，直接进入
+      next()
+    } else {
+      next('/login') // 否则全部重定向到登录页
+      NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
+    }
+  }
+})
+
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
+})
+
+/**
+ * 导出路由 Router
+ **/
+export default router
