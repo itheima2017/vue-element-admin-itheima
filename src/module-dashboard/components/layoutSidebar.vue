@@ -26,31 +26,3 @@ export default {
   }
 }
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .sidebar-logo ,.sidebar-logo-mini {
-    color: rgb(191, 203, 217);
-    font-size: 28px;
-    text-align: center;
-    line-height: 56px;
-    margin: 0px;
-    padding: 0px;
-  }
-  .sidebar-logo {
-    width:180px;
-    height:56px;
-  }
-  .sidebar-logo-mini {
-    display: none;
-    width:36px;
-    height:56px;
-  }
-  .hideSidebar {
-    .sidebar-logo {
-      display: none;
-    }
-    .sidebar-logo-mini {
-      display: block;
-    }
-  }
-</style>
