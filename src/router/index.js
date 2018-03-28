@@ -13,7 +13,9 @@ import {DashboardRouter} from '@/module-dashboard/router'
 // 定义
 const _import = require('./_import_' + process.env.NODE_ENV) // 懒加载 导包
 const whiteList = ['/login', '/authredirect'] // 白名单 无需跳转
-let routerMap = [] // 业务路由
+let routerMap = [ // 业务路由
+  {path: '*', redirect: '/404', hidden: true}
+]
 
 // 配置
 Vue.use(Router)
@@ -54,7 +56,6 @@ export const constantRouterMap = [
   },
   {path: '/404', component: _import('dashboard/pages/404'), hidden: true},
   {path: '/401', component: _import('dashboard/pages/401'), hidden: true},
-  {path: '*', redirect: '/404', hidden: true},
   {
     path: '',
     component: Layout,
