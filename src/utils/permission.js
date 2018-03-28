@@ -1,3 +1,5 @@
+import store from '@/store'
+
 // 检查是否有权限
 export function hasPermission(roles, route) {
   if (roles.menus && route.name) {
