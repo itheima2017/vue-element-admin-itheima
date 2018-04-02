@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+import { validateEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import loginSocialSignin from './../components/loginSocialSignin'
 import shajs from 'sha.js'
@@ -58,8 +58,8 @@ export default {
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (!validateEmail(value)) {
+        callback(new Error('Please enter the email user name'))
       } else {
         callback()
       }
@@ -73,8 +73,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        username: 'root@admin.com',
+        password: 'root123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -95,6 +95,7 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
+        console.log(shajs('sha256').update(this.loginForm.password).digest('hex'))
         if (valid) {
           this.loading = true
           this.$store.dispatch('LoginByUsername', {

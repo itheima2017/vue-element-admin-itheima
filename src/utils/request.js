@@ -14,7 +14,7 @@ instance.interceptors.request.use(
   config => {
     // Do something before request is sent
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken() // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+      config.headers['Authorization'] = `VEA-ADMIN ${getToken()}` // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
     }
     return config
   },
@@ -73,7 +73,6 @@ export const createAPI = (url, method, data) => {
   } else {
     config.data = data
   }
-  config = config || {}
   return instance({
     url,
     method,
@@ -81,10 +80,13 @@ export const createAPI = (url, method, data) => {
   })
 }
 
-export const createFormAPI = (url, method, config) => {
-  config = config || {}
-  config.headers['Cache-Control'] = 'no-cache'
-  config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+export const createFormAPI = (url, method, data) => {
+  let config = {}
+  config.data = data
+  config.headers = {
+    'Cache-Control': 'no-cache',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
   config.responseType = 'json'
   config.transformRequest = [
     function(data) {
