@@ -36,7 +36,7 @@ const user = {
       state.name = name
     },
     SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
+      state.avatar = avatar || 'http://or45inefq.bkt.clouddn.com/itheima-avatar.png'
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
