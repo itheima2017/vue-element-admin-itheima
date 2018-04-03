@@ -27,5 +27,23 @@ export default {
     close: 'Close',
     closeOthers: 'Close Others',
     closeAll: 'Close All'
+  },
+  table: {
+    title: 'Title',
+    search: 'Search',
+    addUser: 'add',
+    id: 'ID',
+    email: 'Email',
+    phone: 'Phone',
+    username: 'User',
+    permissionUser: 'Permission',
+    avatar: 'Avatar',
+    introduction: 'Introduction',
+    paddword: 'paddWord',
+    actions: 'Actions',
+    edit: 'Edit',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    confirm: 'Confirm'
   }
 }

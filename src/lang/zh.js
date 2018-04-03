@@ -27,5 +27,23 @@ export default {
     close: '关闭',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
+  },
+  table: {
+    title: '请输入用户',
+    search: '搜索',
+    addUser: '新增用户',
+    id: '序号',
+    email: '邮箱',
+    phone: '联系电话',
+    username: '用户名',
+    permissionUser: '权限组名称',
+    avatar: '头像',
+    introduction: '介绍',
+    paddword: '密码',
+    actions: '操作',
+    edit: '编辑',
+    delete: '删除',
+    cancel: '取 消',
+    confirm: '确 定'
   }
 }
