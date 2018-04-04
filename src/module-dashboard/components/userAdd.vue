@@ -1,6 +1,6 @@
 <template>
   <div class="add-form">
-    <el-dialog :title="text+page_title" :visible.sync="dialogFormV">
+    <el-dialog :title="text+page_title" :visible.sync="dialogFormVisible">
     <el-form :rules="ruleInline" ref="dataForm" :model="formBase" label-position="left" label-width="120px" style='width: 400px; margin-left:120px;'>
           <el-form-item :label="$t('table.username')" prop="username">
             <el-input v-model="formBase.username"></el-input>
@@ -50,10 +50,11 @@ import {simple} from '@/api/base/permissions'
 import { detail, update, add } from '@/api/base/users'
 export default {
   name: 'usersAdd',
-  props: ['text', 'page_title', 'dialogFormV'],
+  props: ['text', 'page_title'],
   data () {
     return {
         PermissionGroupsList: [], // 权限组加载
+        dialogFormVisible: false,
         formBase: {
             email: '',
             phone: '',
@@ -90,6 +91,14 @@ export default {
         simple().then(data => {
         this.PermissionGroupsList = data.data
       })
+    },
+    // 弹层显示
+    dialogFormV() {
+      this.dialogFormVisible = true
+    },
+    // 弹层隐藏
+    dialogFormH() {
+      this.dialogFormVisible = false
     },
     // 退出
     handleClose() {

@@ -74,7 +74,7 @@
           :formData.sync='requestParameters'
           :text='text'
           :page_title='page_title'
-          :dialogFormV='dialogFormVisible'
+          
           v-on:newDataes="handleLoadDataList" 
           v-on:handleCloseModal="handleCloseModal">
       </component>
@@ -122,7 +122,6 @@ export default {
       dataList: [],
       total: null,
       listLoading: true,
-      dialogFormVisible: false,
       dialogStatus: '',
       requestParameters: {
         page: 1,
@@ -201,20 +200,20 @@ export default {
     },
     // 新增用户
     handleCreate() {
-      // this.query()
+      this.query()
       this.text = '创建'
-      this.dialogFormVisible = true
+      this.$refs.editUser.dialogFormV()
     },
     // 窗口操作**********************************
     // 弹框关闭
     handleCloseModal() {
-      this.dialogFormVisible = false
+      this.$refs.editUser.dialogFormH()
     },
     // 编辑
     handleUpdate(objeditId) {
       var _this = this
       this.text = '编辑'
-      this.dialogFormVisible = true
+      this.$refs.editUser.dialogFormV()
       _this.$refs.editUser.hanldeEditForm(objeditId)
     },
     // 删除
