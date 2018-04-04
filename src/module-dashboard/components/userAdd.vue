@@ -1,6 +1,6 @@
 <template>
   <div class="add-form">
-    <el-dialog :title="text+page_title" :visible.sync="dialogFormVisible">
+    <el-dialog :title="text+pageTitle" :visible.sync="dialogFormVisible">
     <el-form :rules="ruleInline" ref="dataForm" :model="formBase" label-position="left" label-width="120px" style='width: 400px; margin-left:120px;'>
           <el-form-item :label="$t('table.username')" prop="username">
             <el-input v-model="formBase.username"></el-input>
@@ -16,7 +16,7 @@
           </el-form-item>
           <el-form-item :label="$t('table.permissionUser')" prop="permission_group_id">
             <el-select class="filter-item" v-model="formBase.permission_group_id">
-              <el-option v-for="(item) in PermissionGroupsList" :value="item.id" :key="item.id">{{item.title}}
+              <el-option v-for="item in PermissionGroupsList" :value="item.id" :key="item.key" :label="item.title">
               </el-option>
             </el-select>
           </el-form-item>
@@ -46,52 +46,25 @@
   </div>
 </template>
 <script>
-import {simple} from '@/api/base/permissions'
 import { detail, update, add } from '@/api/base/users'
 export default {
   name: 'usersAdd',
-  props: ['text', 'page_title'],
-  data () {
+  props: [
+    'text',
+    'pageTitle',
+    'PermissionGroupsList',
+    'formBase',
+    'ruleInline'
+  ],
+  data() {
     return {
-        PermissionGroupsList: [], // 权限组加载
-        dialogFormVisible: false,
-        formBase: {
-            email: '',
-            phone: '',
-            username: '',
-            password: '',
-            permission_group_id: '',
-            avatar: '',
-            introduction: ''
-            },
-        ruleInline: {
-            username: [
-                { required: true, message: '用户名不能为空', trigger: 'blur' }
-            ],
-            email: [
-                { required: true, message: '邮箱不能为空', trigger: 'blur' }
-            ],
-            password: [
-                { required: true, message: '密码不能为空', trigger: 'blur' }
-            ],
-            permission_group_id: [
-                { type: 'number', required: true, message: '权限组名称不能为空', trigger: 'change' }
-            ]
-        },
-        fileList: [],
-        // importFileUrl: 'https://jsonplaceholder.typicode.com/posts/',
-        imageFileName: []
+      dialogFormVisible: false
+      // fileList: [],
+      // importFileUrl: 'https://jsonplaceholder.typicode.com/posts/',
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
-    // 权限列表
-    setupData() {
-        simple().then(data => {
-        this.PermissionGroupsList = data.data
-      })
-    },
     // 弹层显示
     dialogFormV() {
       this.dialogFormVisible = true
@@ -102,62 +75,46 @@ export default {
     },
     // 退出
     handleClose() {
-        this.$emit('handleCloseModal')
+      this.$emit('handleCloseModal')
     },
-    // 表单详情数据加载
-    hanldeEditForm(objeditId) {
-      this.formBase.id = objeditId
-      detail({ 'id': objeditId }).then((data, err) => {
-        console.log(data.data.list)
-        var datalist = data.data.list[0]
-            if (err) {
-                return err
-            }
-            this.formBase.id = datalist.id
-            this.formBase.email = datalist.email
-            this.formBase.phone = datalist.phone
-            this.formBase.username = datalist.username
-            this.formBase.password = datalist.password
-            this.formBase.avatar = datalist.avatar
-            this.formBase.introduction = datalist.introduction
-            this.formBase.permission_group_id = datalist.permission_group_id
-            this.formBase.permission_group_title = datalist.permission_group_title
-        })
-    },
+
     // 表单提交
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.$emit('handleCloseModal')
-            if (this.formBase.id) {
-                update(this.formBase).then(() => {
-                    this.$emit('newDataes', this.formBase)
-                })
-            } else {
-                add(this.formBase).then(() => {
-                    this.$emit('newDataes', this.formBase)
-                })
-            }
-            } else {
-                this.$Message.error('*号为必填项!')
-            }
+      this.$refs['dataForm'].validate(valid => {
+        if (valid) {
+          this.$emit('handleCloseModal')
+          let data = {
+            ...this.formBase
+          }
+          if (this.formBase.id) {
+            update(data).then(() => {
+              this.$emit('newDataes', this.formBase)
+            })
+          } else {
+            add(this.formBase).then(() => {
+              this.$emit('newDataes', this.formBase)
+            })
+          }
+        } else {
+          this.$Message.error('*号为必填项!')
+        }
       })
     }
   },
   // 挂载结束
-  
-  mounted: function () {
-  },
+
+  mounted: function() {},
   // 创建完毕状态
-  created() {
-    this.setupData()
-  },
+  created() {},
   // 组件更新
-  updated: function() {
-  }
+  updated: function() {}
 }
 </script>
 <style>
-.el-form--label-left .el-form-item__label{text-align: right;}
-.el-dialog__footer{text-align: right;}
+.el-form--label-left .el-form-item__label {
+  text-align: right;
+}
+.el-dialog__footer {
+  text-align: right;
+}
 </style>

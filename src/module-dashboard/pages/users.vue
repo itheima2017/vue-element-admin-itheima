@@ -24,7 +24,7 @@
         </el-table-column>
         <el-table-column align="center" :label="$t('table.email')">
           <template slot-scope="scope">
-            <span>{{scope.row.email | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+            <span>{{scope.row.email}}</span>
           </template>
         </el-table-column>
         <el-table-column :label="$t('table.phone')">
@@ -69,12 +69,14 @@
       </div>
       <!-- end -->
       <!-- 新增标签弹层 -->
-      <component v-bind:is="userAdd"
+      <component v-bind:is="UserAdd"
           ref="editUser" 
           :formData.sync='requestParameters'
           :text='text'
-          :page_title='page_title'
-          
+          :pageTitle='pageTitle'
+          :formBase='formData'
+          :ruleInline='ruleInline'
+          :PermissionGroupsList='PermissionGroupsList'
           v-on:newDataes="handleLoadDataList" 
           v-on:handleCloseModal="handleCloseModal">
       </component>
@@ -82,44 +84,60 @@
   </div>
 </template>
 <style>
-.el-table th{
-     background:#f4f4f4 !important;
+.el-form-item--medium {
+  margin-bottom: 0 !important;
 }
-.el-table th{
-  color: #606266
+.el-form--label-left .el-form-item--medium {
+  margin-bottom: 22px !important;
 }
-.disabled .el-button--primary,.disabled td .el-button--danger{
-    pointer-events: none;
-    cursor: not-allowed;
+.el-form-item--medium .el-form-item__content {
+  margin-left: 0 !important;
+}
+.el-form--label-left .el-form-item--medium .el-form-item__content {
+  margin-left: 120px !important;
+}
+.el-table th {
+  background: #f4f4f4 !important;
+}
+.el-table th {
+  color: #606266;
+}
+.disabled .el-button--primary,
+.disabled td .el-button--danger {
+  pointer-events: none;
+  cursor: not-allowed;
 }
 .disabled td {
-    background-color: #f9f9f9;
-    color: #c1c1c1;
+  background-color: #f9f9f9;
+  color: #c1c1c1;
 }
-.disabled td .el-button--primary ,.disabled td .el-button--danger{
-  background-color:#e7e7e7;
+.disabled td .el-button--primary,
+.disabled td .el-button--danger {
+  background-color: #e7e7e7;
   border: 0 none;
   color: #bababa;
   cursor: not-allowed;
 }
 </style>
 <script>
-import { list, remove } from '@/api/base/users'
+import { simple } from '@/api/base/permissions'
+import { list, remove, detail, update, add } from '@/api/base/users'
 import PageTool from './../components/pageTool'
-import userAdd from './../components/userAdd'
+import UserAdd from './../components/userAdd'
 export default {
   name: 'base-users',
   components: {
-    userAdd,
+    UserAdd,
     PageTool
   },
   data() {
     return {
-      userAdd: 'userAdd',
-      page_title: '用户', // 页面标题
+      UserAdd: 'userAdd',
+      pageTitle: '用户', // 页面标题
       text: '', // 新增、编辑文本
       tableKey: 0,
       dataList: [],
+      PermissionGroupsList: [], // 权限组加载
       total: null,
       listLoading: true,
       dialogStatus: '',
@@ -134,28 +152,54 @@ export default {
         username: '',
         password: '',
         permission_group_id: '',
+        permission_group_title: '',
         avatar: '',
         introduction: ''
+      },
+      ruleInline: {
+        // 表单验证
+        username: [
+          { required: true, message: '用户名不能为空', trigger: 'blur' }
+        ],
+        email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
+        password: [
+          { required: true, message: '密码不能为空', trigger: 'blur' }
+        ],
+        permission_group_id: [
+          {
+            type: 'number',
+            required: true,
+            message: '权限组名称不能为空',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     // 获取列表数据
     getList(params) {
       this.listLoading = true
-      list(this.requestParameters).then(data => {
-        this.dataList = data.data.list
-        this.total = data.data.counts
-        this.listLoading = false
-      }).catch(e => {
-        this.$message.e('错了哦，这是一条错误消息')
+      list(this.requestParameters)
+        .then(data => {
+          this.dataList = data.data.list
+          this.total = data.data.counts
+          this.listLoading = false
+        })
+        .catch(e => {
+          this.$message.e('错了哦，这是一条错误消息')
+        })
+    },
+    // 权限列表
+    setupData() {
+      simple().then(data => {
+        this.PermissionGroupsList = data.data
       })
     },
     // 重置
     resetForm() {
-        this.$refs['requestParameters'].resetFields()
+      this.$refs['requestParameters'].resetFields()
     },
     // 搜索信息
     handleFilter() {
@@ -166,8 +210,8 @@ export default {
     handleSizeChange(val) {
       this.requestParameters.pagesize = val
       if (this.requestParameters.page === 1) {
-            this.getList(this.requestParameters)
-        }
+        this.getList(this.requestParameters)
+      }
     },
     // 进入某一页
     handleCurrentChange(val) {
@@ -176,11 +220,10 @@ export default {
     },
     // 新增用户刷新列表
     handleLoadDataList() {
-        this.getList()
+      this.getList()
     },
     // 数据删除后显示样式
     rowClassStatus(row) {
-      // console.log(row.row.is_deleted)
       if (row.row.is_deleted === 1) {
         return 'disabled'
       } else {
@@ -188,15 +231,17 @@ export default {
       }
     },
     // **********************************
-    // 搜索的项目 
-    query () {
-      this.formData.email = ''
-      this.formData.phone = ''
-      this.formData.username = ''
-      this.formData.password = ''
-      this.formData.permission_group_id = ''
-      this.formData.avatar = ''
-      this.formData.introduction = '' 
+    // 搜索的项目
+    query() {
+      this.formData = {
+        email: '',
+        phone: '',
+        username: '',
+        password: '',
+        permission_group_id: '',
+        avatar: '',
+        introduction: ''
+      }
     },
     // 新增用户
     handleCreate() {
@@ -210,46 +255,69 @@ export default {
       this.$refs.editUser.dialogFormH()
     },
     // 编辑
+    // 表单详情数据加载
+    hanldeEditForm(objeditId) {
+      this.formData.id = objeditId
+      detail({ id: objeditId }).then((data, err) => {
+        var datalist = data.data.list[0]
+        if (err) {
+          return err
+        }
+        this.formData.id = datalist.id
+        this.formData.email = datalist.email
+        this.formData.phone = datalist.phone
+        this.formData.username = datalist.username
+        this.formData.password = datalist.password
+        this.formData.avatar = datalist.avatar
+        this.formData.introduction = datalist.introduction
+        this.formData.permission_group_id = datalist.permission_group_id
+        this.formData.permission_group_title = datalist.permission_group_title
+      })
+    },
     handleUpdate(objeditId) {
+      this.query()
       var _this = this
       this.text = '编辑'
       this.$refs.editUser.dialogFormV()
-      _this.$refs.editUser.hanldeEditForm(objeditId)
+      _this.hanldeEditForm(objeditId)
     },
     // 删除
     removeUser(user) {
-        this.$confirm('此操作将永久删除用户 ' + ', 是否继续?', '提示', { type: 'warning' }) 
-            .then(() => { 
-                remove({'id': user}).then(response => { 
-                        this.$message.success('成功删除了用户' + '!')
-                        this.dataList.splice(user, 1)
-                        this.getList(this.requestParameters)
-                        }) 
-                    .catch(response => { 
-                        this.$message.error('删除失败!') 
-                })
-            }).catch(() => { 
-                this.$message.info('已取消操作!')
-        }) 
+      this.$confirm('此操作将永久删除用户 ' + ', 是否继续?', '提示', {
+        type: 'warning'
+      })
+        .then(() => {
+          remove({ id: user })
+            .then(response => {
+              this.$message.success('成功删除了用户' + '!')
+              this.dataList.splice(user, 1)
+              this.getList(this.requestParameters)
+            })
+            .catch(response => {
+              this.$message.error('删除失败!')
+            })
+        })
+        .catch(() => {
+          this.$message.info('已取消操作!')
+        })
     }
   },
   // 挂载结束
-  mounted: function() {
-  },
+  mounted: function() {},
   // 创建完毕状态
   created() {
     this.getList()
+    this.setupData()
     // 键盘enter操作
-      var lett = this
-      document.onkeydown = function(e) {
-          var key = window.event.keyCode
-          if (key === 13) {
-              lett.handleFilter(this.requestParameters)
-          }
+    var lett = this
+    document.onkeydown = function(e) {
+      var key = window.event.keyCode
+      if (key === 13) {
+        lett.handleFilter(this.requestParameters)
       }
+    }
   },
   // 组件更新
-  updated: function() {
-  }
+  updated: function() {}
 }
 </script>
