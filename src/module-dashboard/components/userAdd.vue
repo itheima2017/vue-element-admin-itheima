@@ -47,20 +47,20 @@
 </template>
 <script>
 import {simple} from '@/api/base/permissions'
-import { detail,update,add } from '@/api/base/users'
+import { detail, update, add } from '@/api/base/users'
 export default {
   name: 'usersAdd',
-  props: ["text","page_title",'dialogFormV'],
+  props: ['text', 'page_title', 'dialogFormV'],
   data () {
     return {
-        PermissionGroupsList: [],// 权限组加载
+        PermissionGroupsList: [], // 权限组加载
         formBase: {
             email: '',
             phone: '',
             username: '',
             password: '',
             permission_group_id: '',
-            avatar:'',
+            avatar: '',
             introduction: ''
             },
         ruleInline: {
@@ -74,12 +74,12 @@ export default {
                 { required: true, message: '密码不能为空', trigger: 'blur' }
             ],
             permission_group_id: [
-                { type: 'number', required: true, message: '权限组名称不能为空', trigger: 'change'}
+                { type: 'number', required: true, message: '权限组名称不能为空', trigger: 'change' }
             ]
         },
-        fileList:[],
+        fileList: [],
         // importFileUrl: 'https://jsonplaceholder.typicode.com/posts/',
-        imageFileName:[]
+        imageFileName: []
     }
   },
   computed: {
@@ -98,9 +98,9 @@ export default {
     // 表单详情数据加载
     hanldeEditForm(objeditId) {
       this.formBase.id = objeditId
-      detail({ 'id': objeditId }).then((data, err)=> {
+      detail({ 'id': objeditId }).then((data, err) => {
         console.log(data.data.list)
-        var datalist=data.data.list[0]
+        var datalist = data.data.list[0]
             if (err) {
                 return err
             }
@@ -113,7 +113,6 @@ export default {
             this.formBase.introduction = datalist.introduction
             this.formBase.permission_group_id = datalist.permission_group_id
             this.formBase.permission_group_title = datalist.permission_group_title
-        }).catch(error => {
         })
     },
     // 表单提交
@@ -134,25 +133,7 @@ export default {
                 this.$Message.error('*号为必填项!')
             }
       })
-    },
-    // handleChange(file, fileList) {
-    //     this.fileList = fileList.slice(-3);
-    //   },
-    // 上传前对文件的大小的判断
-    // beforeAvatarUpload (file) {
-    //     const isJPG = file.type === 'image/jpeg';
-    //     const isGIF = file.type === 'image/gif';
-    //     const isPNG = file.type === 'image/png';
-    //     const isBMP = file.type === 'image/bmp';
-    //     const isLt2M = file.size / 1024 / 1024 < 2;
-    //   if (!isJPG && !isGIF && !isPNG && !isBMP) {
-    //             this.common.errorTip('上传图片必须是JPG/GIF/PNG/BMP 格式!');
-    //         }
-    //         if (!isLt2M) {
-    //             this.common.errorTip('上传图片大小不能超过 2MB!');
-    //         }
-    //         return (isJPG || isBMP || isGIF || isPNG) && isLt2M;
-    // }
+    }
   },
   // 挂载结束
   

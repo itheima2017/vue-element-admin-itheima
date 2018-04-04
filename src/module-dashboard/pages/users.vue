@@ -81,9 +81,30 @@
      </div>
   </div>
 </template>
-
+<style>
+.el-table th{
+     background:#f4f4f4 !important;
+}
+.el-table th{
+  color: #606266
+}
+.disabled .el-button--primary,.disabled td .el-button--danger{
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.disabled td {
+    background-color: #f9f9f9;
+    color: #c1c1c1;
+}
+.disabled td .el-button--primary ,.disabled td .el-button--danger{
+  background-color:#e7e7e7;
+  border: 0 none;
+  color: #bababa;
+  cursor: not-allowed;
+}
+</style>
 <script>
-import {list ,remove } from '@/api/base/users'
+import { list, remove } from '@/api/base/users'
 import PageTool from './../components/pageTool'
 import userAdd from './../components/userAdd'
 export default {
@@ -95,8 +116,8 @@ export default {
   data() {
     return {
       userAdd: 'userAdd',
-      page_title: '用户',    // 页面标题
-      text: '',             // 新增、编辑文本
+      page_title: '用户', // 页面标题
+      text: '', // 新增、编辑文本
       tableKey: 0,
       dataList: [],
       total: null,
@@ -106,12 +127,12 @@ export default {
       requestParameters: {
         page: 1,
         pagesize: 10,
-        username:this.username,
+        username: this.username
       },
       formData: {
         email: '',
         phone: '',
-        username:'',
+        username: '',
         password: '',
         permission_group_id: '',
         avatar: '',
@@ -129,9 +150,9 @@ export default {
         this.dataList = data.data.list
         this.total = data.data.counts
         this.listLoading = false
-      }).catch(error => {
-          this.$message.error('错了哦，这是一条错误消息');
-        })
+      }).catch(e => {
+        this.$message.e('错了哦，这是一条错误消息')
+      })
     },
     // 重置
     resetForm() {
@@ -169,18 +190,18 @@ export default {
     },
     // **********************************
     // 搜索的项目 
-    query() {
-      this.formData.email='',
-      this.formData.phone='',
-      this.formData.username='',
-      this.formData.password='',
-      this.formData.permission_group_id='',
-      this.formData.avatar='',
-      this.formData.introduction=''
+    query () {
+      this.formData.email = ''
+      this.formData.phone = ''
+      this.formData.username = ''
+      this.formData.password = ''
+      this.formData.permission_group_id = ''
+      this.formData.avatar = ''
+      this.formData.introduction = '' 
     },
     // 新增用户
     handleCreate() {
-      this.query()
+      // this.query()
       this.text = '创建'
       this.dialogFormVisible = true
     },
@@ -198,20 +219,20 @@ export default {
     },
     // 删除
     removeUser(user) {
-        this.$confirm('此操作将永久删除用户 ' +  ', 是否继续?', '提示', { type: 'warning' }) 
+        this.$confirm('此操作将永久删除用户 ' + ', 是否继续?', '提示', { type: 'warning' }) 
             .then(() => { 
-                remove({"id":user}).then(response => { 
-                        this.$message.success('成功删除了用户' + '!');
-                        this.dataList.splice(user,1);
+                remove({'id': user}).then(response => { 
+                        this.$message.success('成功删除了用户' + '!')
+                        this.dataList.splice(user, 1)
                         this.getList(this.requestParameters)
                         }) 
                     .catch(response => { 
-                        this.$message.error('删除失败!'); 
-                }); 
-            }) .catch(() => { 
-                this.$message.info('已取消操作!');
-        }); 
-    },
+                        this.$message.error('删除失败!') 
+                })
+            }).catch(() => { 
+                this.$message.info('已取消操作!')
+        }) 
+    }
   },
   // 挂载结束
   mounted: function() {
@@ -233,26 +254,3 @@ export default {
   }
 }
 </script>
-<style>
-.el-table th{
-     background:#f4f4f4 !important;
-}
-.el-table th{
-  color: #606266
-}
-.disabled .el-button--primary,.disabled td .el-button--danger{
-    pointer-events: none;
-    cursor: not-allowed;
-}
-.disabled td {
-    background-color: #f9f9f9;
-    color: #c1c1c1;
-}
-.disabled td .el-button--primary ,.disabled td .el-button--danger{
-  background-color:#e7e7e7;
-  border: 0 none;
-  color: #bababa;
-  cursor: not-allowed;
-}
-</style>
-
