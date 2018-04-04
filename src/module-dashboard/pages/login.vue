@@ -25,12 +25,12 @@
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
 
       <div class="tips">
-        <span>{{$t('login.username')}} : admin</span>
-        <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
+        <span>{{$t('login.username')}} : root@admin.com</span>
+        <span>{{$t('login.password')}} : root123456</span>
       </div>
       <div class="tips">
-        <span style="margin-right:18px;">{{$t('login.username')}} : editor</span>
-        <span>{{$t('login.password')}} : {{$t('login.any')}}</span>
+        <span style="margin-right:18px;">{{$t('login.username')}} : editor@admin.com</span>
+        <span>{{$t('login.password')}} : editor123456</span>
       </div>
 
       <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button>
