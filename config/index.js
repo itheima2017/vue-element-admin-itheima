@@ -12,7 +12,7 @@ module.exports = {
     proxyTable: {
       '/api': {
         // target: 'https://www.easy-mock.com/mock/5ab213e33666166110a94928/admin',
-        target: 'http://www.corho.com:7999',
+        target: 'http://172.17.0.58:7999',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
