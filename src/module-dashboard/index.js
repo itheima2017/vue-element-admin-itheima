@@ -13,10 +13,12 @@ export default {
     // 注册路由
     asyncRouterMap.push(routerMaps[0])
     // 注册状态管理
-    store.registerModule('app', app)
-    store.registerModule('errorLog', errorLog)
-    store.registerModule('permission', permission)
-    store.registerModule('tagsView', tagsView)
-    store.registerModule('user', user)
+    if (store !== undefined) {
+      store.registerModule('app', app)
+      store.registerModule('errorLog', errorLog)
+      store.registerModule('permission', permission)
+      store.registerModule('tagsView', tagsView)
+      store.registerModule('user', user)
+    }
   }
 }
