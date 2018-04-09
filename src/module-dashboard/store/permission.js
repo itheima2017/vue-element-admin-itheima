@@ -1,5 +1,4 @@
-import { constantRouterMap } from '@/router/'
-import { asyncRouterMap } from '@/router/routerMaps'
+import { asyncRouterMap, constantRouterMap } from '@/router'
 import { hasPermission } from '@/utils/permission'
 
 /**

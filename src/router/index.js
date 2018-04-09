@@ -117,6 +117,13 @@ router.afterEach(() => {
 })
 
 /**
- * 导出路由 Router
+ * 导出 基础路由
  **/
 export default router
+
+/**
+ * 导出 业务路由
+ **/
+export let asyncRouterMap = [
+  {path: '*', redirect: '/404', hidden: true}
+]
