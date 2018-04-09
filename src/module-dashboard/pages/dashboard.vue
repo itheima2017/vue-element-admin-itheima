@@ -203,11 +203,11 @@
 
 <script>
 import {hasPermissionPoint} from '@/utils/permission'
-import LineChart from './../components/DashboardLineChart'
-import RaddarChart from './../components/DashboardRaddarChart'
-import PieChart from './../components/DashboardPieChart'
-import BarChart from './../components/DashboardBarChart'
-import AreaChart from './../components/DashboardAreaChart'
+import LineChart from './../components/dashboardLineChart'
+import RaddarChart from './../components/dashboardRaddarChart'
+import PieChart from './../components/dashboardPieChart'
+import BarChart from './../components/dashboardBarChart'
+import AreaChart from './../components/dashboardAreaChart'
 
 const lineChartData = {
   newVisitis: {
