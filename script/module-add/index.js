@@ -8,14 +8,14 @@ module.exports = {
     author: {
       type: 'string',
       required: false,
-      message: '模块',
+      message: '作者',
       default: 'yourname <yourname@xxxx.xxx>'
     },
     description: {
       type: 'string',
       required: false,
-      message: '模块说明',
-      default: ''
+      message: '说明',
+      default: 'xxx业务模块'
     }
   }
 }
