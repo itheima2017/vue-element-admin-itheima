@@ -4,9 +4,6 @@
   "description": "vue-element-admin 商用管理系统模板",
   "author": "taoshiwei <taoshiwei@itcast.cn>",
   "private": true,
-  "bin": {
-    "module-add": "script/bin/module-init"
-  },
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
