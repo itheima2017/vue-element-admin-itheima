@@ -1,7 +1,7 @@
 import Layout from '@/module-dashboard/pages/layout'
 const _import = require('@/router/_import_' + process.env.NODE_ENV)
 
-export const DashboardRouter = [
+export default [
   {
     path: '/base',
     component: Layout,

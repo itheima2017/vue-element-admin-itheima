@@ -21,8 +21,7 @@ export default {
     password: 'Password',
     any: 'any',
     thirdparty: 'Third',
-    thirdpartyTips:
-      'Can not be simulated on local, so please combine you own business simulation! ! !'
+    thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
   },
   tagsView: {
     close: 'Close',

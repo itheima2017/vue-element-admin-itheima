@@ -7,25 +7,13 @@ import Layout from '@/module-dashboard/pages/layout'
 import {getToken} from '@/utils/auth'
 import {hasPermissionPoint, hasPermission} from '@/utils/permission'
 
-// 导入模块路由
-import {DashboardRouter} from '@/module-dashboard/router'
-
 // 定义
 const _import = require('./_import_' + process.env.NODE_ENV) // 懒加载 导包
 const whiteList = ['/login', '/authredirect'] // 白名单 无需跳转
-let routerMap = [ // 业务路由
-  {path: '*', redirect: '/404', hidden: true}
-]
 
 // 配置
 Vue.use(Router)
 NProgress.configure({showSpinner: false}) // NProgress Configuration
-
-/**
- * 合并业务路由
- **/
-routerMap = routerMap.concat(DashboardRouter) // 面板
-export const asyncRouterMap = routerMap
 
 /**
  * 基础路由
@@ -129,6 +117,13 @@ router.afterEach(() => {
 })
 
 /**
- * 导出路由 Router
+ * 导出 基础路由
  **/
 export default router
+
+/**
+ * 导出 业务路由
+ **/
+export let asyncRouterMap = [
+  {path: '*', redirect: '/404', hidden: true}
+]
