@@ -5,7 +5,8 @@ export default {
     users: 'users',
     menus: 'menus',
     permissions: 'permissions',
-    logs: 'logs'
+    logs: 'logs',
+    example: 'example'
   },
   navbar: {
     logOut: 'Log Out',

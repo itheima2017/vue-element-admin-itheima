@@ -15,7 +15,9 @@ import * as filters from './filters' // global filters
 * 注册 - 业务模块
 */
 import dashboard from '@/module-dashboard/' // 面板
+import example from '@/module-example/' // 示例
 Vue.use(dashboard, store)
+Vue.use(example, store)
 
 /*
 * 注册 - 组件

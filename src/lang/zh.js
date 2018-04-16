@@ -5,7 +5,8 @@ export default {
     users: '用户管理',
     menus: '菜单管理',
     permissions: '权限管理',
-    logs: '日志管理'
+    logs: '日志管理',
+    example: '示例'
   },
   navbar: {
     logOut: '退出登录',
