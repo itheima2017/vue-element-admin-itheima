@@ -8,7 +8,7 @@ import {getToken} from '@/utils/auth'
 import {hasPermissionPoint, hasPermission} from '@/utils/permission'
 
 // 定义
-const _import = require('./_import_' + process.env.NODE_ENV) // 懒加载 导包
+const _import = require('./import_' + process.env.NODE_ENV) // 懒加载 导包
 const whiteList = ['/login', '/authredirect'] // 白名单 无需跳转
 
 // 配置

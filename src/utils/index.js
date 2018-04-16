@@ -82,7 +82,13 @@ export function formatTime(time, option) {
   }
 }
 
-// 格式化时间
+/**
+ * 格式化时间
+ * 
+ * @export
+ * @param {any} url 
+ * @returns 
+ */
 export function getQueryObject(url) {
   url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf('?') + 1)
@@ -150,6 +156,13 @@ export function param2Obj(url) {
   )
 }
 
+/**
+ * html转文字
+ * 
+ * @export
+ * @param {any} val 
+ * @returns 
+ */
 export function html2Text(val) {
   const div = document.createElement('div')
   div.innerHTML = val
