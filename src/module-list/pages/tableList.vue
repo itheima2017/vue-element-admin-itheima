@@ -41,10 +41,10 @@
         <el-alert v-if="barSearch.alertText !== ''" :title="barSearch.alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
         <!-- 搜索栏 / -->
         <!-- 数据表格 -->
-        <el-table v-if="tableItems.length > 0" 
-          :data="tableItems" 
+        <el-table 
+          :data="items" 
           border 
-          style="width: 100%" 
+          style="width: 100%; margin-top:10px;" 
           @selection-change="handleSelectionChange"
           >
           <el-table-column type="selection" width="55"></el-table-column>
@@ -55,13 +55,14 @@
           <el-table-column prop="pageviews" label="浏览" width="80"></el-table-column>
           <el-table-column prop="display_time" label="日期" width="160"></el-table-column>
         </el-table>
-        <el-pagination v-if="tableItems.length > 0" class="pagination"
+        <el-pagination 
+          class="pagination"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pagination.currentPage"
           :page-sizes="pagination.pageSizes"
           :page-size="pagination.pageSize"
-          layout="pagination.total, sizes, prev, pager, next, jumper"
+          layout="total, sizes, prev, pager, next, jumper"
           :total="pagination.total">
         </el-pagination>
         <!-- 数据表格 / -->
@@ -93,7 +94,7 @@ export default {
         expandBtnText: '',
         alertText: ''
       },
-      tableItems: [],
+      items: [],
       pagination: {
         total: 0,
         pageSize: 20,
@@ -106,15 +107,17 @@ export default {
   },
   methods: {
     // 业务方法
-    doQuery() {
+    doQuery(page = 1, limit = 20) {
+      this.pagination.currentPage = page
+      this.pagination.pageSize = limit
       this.loading = true
       this.barSearch.alertText = ''
-      this.tableItems = []
-      list({})
+      this.items = []
+      list({page, limit})
         .then(res => {
           console.log(res.data)
-          this.tableItems = res.data.items
-          this.pagination.total = res.data.pagination.total
+          this.items = res.data.items
+          this.pagination.total = res.data.total
           this.barSearch.alertText = `共 ${this.pagination.total} 条记录`
           this.loading = false
         })
@@ -151,10 +154,12 @@ export default {
       console.log(val, this.multipleSelection)
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`)
+      // console.log(`每页 ${val} 条`)
+      this.doQuery(1, val)
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`)
+      // console.log(`当前页: ${val}`)
+      this.doQuery(val, this.pagination.pageSize)
     }
   },
   created() {
@@ -166,19 +171,10 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .alert {
-  margin: 10px 0px;
+  margin: 10px 0px 0px 0px;
 }
 .pagination {
   margin-top: 10px;
   text-align: right;
-}
-</style>
-
-<style>
-.el-table th {
-  background-color: #fafafa;
-}
-.el-table th.is-leaf {
-  border-bottom: 2px solid #e8e8e8;
 }
 </style>

@@ -199,3 +199,11 @@ code {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+// el-table
+.el-table th {
+  background-color: #fafafa;
+}
+.el-table th.is-leaf {
+  border-bottom: 2px solid #e8e8e8;
+}
