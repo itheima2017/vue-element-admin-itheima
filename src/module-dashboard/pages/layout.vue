@@ -5,6 +5,14 @@
 			<layout-navbar></layout-navbar>
 			<layout-tags></layout-tags>
 			<layout-app-main></layout-app-main>
+      <div class="bottom">
+        <p>
+          <a href="https://github.com/itheima2017/vue-element-admin-itheima" target="_blank">
+            <svg-icon icon-class="github"></svg-icon>
+          </a>
+        </p>
+        <p>Copyright<svg-icon icon-class="copyright"></svg-icon> 2018 传智研究院出品</p>
+      </div>
 		</div>
 	</div>
 </template>
@@ -38,5 +46,12 @@ export default {
 	position: relative;
 	height: 100%;
 	width: 100%;
+}
+.bottom {
+  p {
+    text-align: center;
+    color: rgba(0,0,0,.45);
+    font-size: 14px;
+  }
 }
 </style>

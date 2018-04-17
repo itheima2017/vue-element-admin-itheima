@@ -58,11 +58,11 @@
         <el-pagination v-if="tableItems.length > 0" class="pagination"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="pageSizes"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
+          :current-page="pagination.currentPage"
+          :page-sizes="pagination.pageSizes"
+          :page-size="pagination.pageSize"
+          layout="pagination.total, sizes, prev, pager, next, jumper"
+          :total="pagination.total">
         </el-pagination>
         <!-- 数据表格 / -->
       </el-card>
@@ -74,7 +74,7 @@
 import {list} from '@/api/example/table'
 
 export default {
-  name: 'tableList',
+  name: 'table-list',
   data() {
     return {
       formSearch: {
@@ -94,12 +94,14 @@ export default {
         alertText: ''
       },
       tableItems: [],
-      total: 0,
-      pageSize: 20,
-      pageSizes: [20, 50, 80, 120],
+      pagination: {
+        total: 0,
+        pageSize: 20,
+        pageSizes: [20, 50, 80, 120],
+        currentPage: 1
+      },
       loading: false,
-      multipleSelection: [],
-      currentPage: 1
+      multipleSelection: []
     }
   },
   methods: {
@@ -112,8 +114,8 @@ export default {
         .then(res => {
           console.log(res.data)
           this.tableItems = res.data.items
-          this.total = res.data.total
-          this.barSearch.alertText = `共 ${this.total} 条记录`
+          this.pagination.total = res.data.pagination.total
+          this.barSearch.alertText = `共 ${this.pagination.total} 条记录`
           this.loading = false
         })
         .catch(err => {
