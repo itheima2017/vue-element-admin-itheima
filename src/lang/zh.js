@@ -39,16 +39,26 @@ export default {
     username: '用户名',
     permissionNew: '新增权限组',
     permissionUser: '权限组名称',
+    imdsAi: '高级接口授权',
     avatar: '头像',
     introduction: '介绍',
     paddword: '密码',
     powerCode: '权限代码',
+    powerDistriB: '权限分配',
     powerTitle: '权限标题',
     powerNav: '主导航',
     actions: '操作',
     edit: '编辑',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    operationType: '操作类型',
+    operationDate: '操作时间',
+    date: '日期',
+    operator: '操作人',
+    results: '执行结果',
+    describe: '描述',
+    preserve: '保存',
+    signOut: '退出'
   }
 }
