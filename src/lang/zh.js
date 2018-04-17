@@ -6,7 +6,18 @@ export default {
     menus: '菜单管理',
     permissions: '权限管理',
     logs: '日志管理',
-    example: '示例'
+    example: '示例',
+    table: '数据列表',
+
+    list: '列表页',
+    tableList: '查询表格',
+    basicList: '标准列表',
+    cardList: '卡片列表',
+
+    form: '表单页',
+    basicForm: '基础表单',
+    stepForm: '分步表单',
+    advancedList: '高级表单'
   },
   navbar: {
     logOut: '退出登录',

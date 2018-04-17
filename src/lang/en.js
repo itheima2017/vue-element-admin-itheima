@@ -6,7 +6,18 @@ export default {
     menus: 'menus',
     permissions: 'permissions',
     logs: 'logs',
-    example: 'example'
+    example: 'example',
+    table: 'table',
+
+    list: 'list',
+    tableList: 'table list',
+    basicList: 'basic list',
+    cardList: 'card list',
+
+    form: 'form',
+    basicForm: 'basic form',
+    stepForm: 'step form',
+    advancedList: 'advanced form'
   },
   navbar: {
     logOut: 'Log Out',
