@@ -37,8 +37,15 @@
             <el-button type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
           </el-form-item>
         </el-form>
-        <el-button type="primary" icon="el-icon-plus">新建</el-button>
-        <el-alert v-if="barSearch.alertText !== ''" :title="barSearch.alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
+        <el-button type="primary" icon="el-icon-plus" @click="handleNew">新建</el-button>
+        <el-alert 
+          v-if="barSearch.alertText !== ''" 
+          :title="barSearch.alertText" 
+          type="info" 
+          class="alert" 
+          :closable='false' 
+          show-icon>
+        </el-alert>
         <!-- 搜索栏 / -->
         <!-- 数据表格 -->
         <el-table 
@@ -68,6 +75,26 @@
         <!-- 数据表格 / -->
       </el-card>
     </div>
+    <!-- 弹出窗 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-form :model="formData" label-width="50px" label-position="right">
+        <el-form-item label="标题">
+          <el-input v-model="formData.title" placeholder="标题"></el-input>
+        </el-form-item>
+        <el-form-item label="作者">
+          <el-input v-model="formData.author" placeholder="作者"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 弹出窗 / -->
   </div>
 </template>
 
@@ -102,7 +129,9 @@ export default {
         currentPage: 1
       },
       loading: false,
-      multipleSelection: []
+      multipleSelection: [],
+      dialogVisible: false,
+      formData: []
     }
   },
   methods: {
@@ -160,6 +189,23 @@ export default {
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`)
       this.doQuery(val, this.pagination.pageSize)
+    },
+    handleClose() {
+      this.$confirm('确认关闭？')
+        .then(ret => {
+          console.log(ret)
+          this.dialogVisible = false
+        })
+        .catch(ret => {
+          console.log(ret)
+        })
+    },
+    handleNew() {
+      this.formData = {
+        title: '',
+        author: ''
+      }
+      this.dialogVisible = true
     }
   },
   created() {
