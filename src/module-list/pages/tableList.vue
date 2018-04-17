@@ -3,7 +3,7 @@
     <div class="app-container">
       <el-card shadow="never" v-loading="loading">
         <!-- 搜索栏 -->
-        <el-form :inline="true" :model="formSearch" size="small">
+        <el-form :inline="true" :model="formSearch">
           <el-form-item label="审批人">
             <el-input v-model="formSearch.user" placeholder="审批人"></el-input>
           </el-form-item>
@@ -37,11 +37,16 @@
             <el-button type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
           </el-form-item>
         </el-form>
-        <el-button type="primary" icon="el-icon-plus" size="small">新建</el-button>
+        <el-button type="primary" icon="el-icon-plus">新建</el-button>
         <el-alert v-if="barSearch.alertText !== ''" :title="barSearch.alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
         <!-- 搜索栏 / -->
         <!-- 数据表格 -->
-        <el-table class="tableL-container" v-if="tableItems.length > 0" :data="tableItems" border style="width: 100%" @selection-change="handleSelectionChange">
+        <el-table v-if="tableItems.length > 0" 
+          :data="tableItems" 
+          border 
+          style="width: 100%" 
+          @selection-change="handleSelectionChange"
+          >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column prop="title" label="标题" ></el-table-column>
           <el-table-column prop="type" label="类型" width="60"></el-table-column>
@@ -170,9 +175,8 @@ export default {
 <style>
 .el-table th {
   background-color: #fafafa;
-  border-bottom: 1px solid #e8e8e8;
 }
 .el-table th.is-leaf {
-  border-bottom: 2px solid #e8e8e8 !important;
+  border-bottom: 2px solid #e8e8e8;
 }
 </style>
