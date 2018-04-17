@@ -2,7 +2,7 @@
   <div class="menu-wrapper">
     <template v-for="item in routes" v-if="!item.hidden&&item.children">
       
-      <router-link v-if="item.children.length===1 && !item.children[0].children&&!item.alwaysShow" :to="item.path+'/'+item.children[0].path" :key="item.children[0].name">
+      <router-link v-if="item.children.length===1 && !item.children[0].children && !item.alwaysShow && item.children[0].meta && item.children[0].meta.icon" :to="item.path+'/'+item.children[0].path" :key="item.children[0].name">
         <el-menu-item :index="item.path+'/'+item.children[0].path" >
           <svg-icon v-if="item.children[0].meta&&item.children[0].meta.icon" :icon-class="item.children[0].meta.icon"></svg-icon>
           <span v-if="item.children[0].meta&&item.children[0].meta.title" slot="title">{{generateTitle(item.children[0].meta.title)}}</span>
@@ -16,7 +16,7 @@
         </template>
 
         <template v-for="child in item.children" v-if="!child.hidden">
-          <sidebar-item :is-nest="true" v-if="child.children&&child.children.length>0" :routes="[child]" :key="child.path"></sidebar-item>
+          <sidebar-item :is-nest="true" v-if="child.children && child.children.length > 0" :routes="[child]" :key="child.path"></sidebar-item>
 
           <router-link v-else :to="item.path+'/'+child.path" :key="child.name">
             <el-menu-item :index="item.path+'/'+child.path">

@@ -1,12 +1,12 @@
 <template>
   <div>
-    {{name}}
+    form
   </div>
 </template>
 
 <script>
 export default {
-  name: '{{name}}',
+  name: 'form',
   data() {
     return {
     }

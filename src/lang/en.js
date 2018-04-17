@@ -5,7 +5,19 @@ export default {
     users: 'users',
     menus: 'menus',
     permissions: 'permissions',
-    logs: 'logs'
+    logs: 'logs',
+    example: 'example',
+    table: 'table',
+
+    list: 'list',
+    tableList: 'table list',
+    basicList: 'basic list',
+    cardList: 'card list',
+
+    form: 'form',
+    basicForm: 'basic form',
+    stepForm: 'step form',
+    advancedList: 'advanced form'
   },
   navbar: {
     logOut: 'Log Out',

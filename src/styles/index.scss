@@ -127,9 +127,17 @@ code {
 }
 
 //main-container全局样式
+.main-container {
+  background: #f0f2f5;
+}
+
 .app-container {
   padding: 20px;
 }
+
+// .dashboard-container {
+//   background: #f0f2f5;
+// }
 
 .components-container {
   margin: 30px 50px;
