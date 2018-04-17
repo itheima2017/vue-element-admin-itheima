@@ -51,6 +51,7 @@ export default {
     username: 'User',
     permissionNew: 'permissionNew',
     permissionUser: 'Permission',
+    imdsAi: 'Advanced interface authorization',
     avatar: 'Avatar',
     introduction: 'Introduction',
     paddword: 'paddWord',
@@ -60,6 +61,14 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    operationType: 'operationType',
+    operationDate: 'operationDate',
+    date: 'Date',
+    operator: 'operator',
+    results: 'results of enforcement',
+    describe: 'Pedagogical operation',
+    preserve: 'preserve',
+    signOut: 'sign out'
   }
 }
