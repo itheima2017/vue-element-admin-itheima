@@ -95,7 +95,7 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
-        console.log(shajs('sha256').update(this.loginForm.password).digest('hex'))
+        // console.log(shajs('sha256').update(this.loginForm.password).digest('hex'))
         if (valid) {
           this.loading = true
           this.$store.dispatch('LoginByUsername', {
@@ -108,7 +108,7 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
+          // console.log('error submit!!')
           return false
         }
       })

@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
-      <el-card shadow="never">
+      <el-card shadow="never" v-loading="loading">
         <!-- 搜索栏 -->
         <el-form :inline="true" :model="formSearch" size="small">
           <el-form-item label="审批人">
@@ -40,13 +40,33 @@
         <el-button type="primary" icon="el-icon-plus" size="small">新建</el-button>
         <el-alert v-if="barSearch.alertText !== ''" :title="barSearch.alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
         <!-- 搜索栏 / -->
+        <!-- 数据表格 -->
+        <el-table class="tableL-container" v-if="tableItems.length > 0" :data="tableItems" border style="width: 100%" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column prop="title" label="标题" ></el-table-column>
+          <el-table-column prop="type" label="类型" width="60"></el-table-column>
+          <el-table-column prop="author" label="作者" width="80"></el-table-column>
+          <el-table-column prop="reviewer" label="审核" width="80"></el-table-column>
+          <el-table-column prop="pageviews" label="浏览" width="80"></el-table-column>
+          <el-table-column prop="display_time" label="日期" width="160"></el-table-column>
+        </el-table>
+        <el-pagination v-if="tableItems.length > 0" class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="pageSizes"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+        <!-- 数据表格 / -->
       </el-card>
     </div>
   </div>
 </template>
 
 <script>
-import { list } from '@/api/example/table'
+import {list} from '@/api/example/table'
 
 export default {
   name: 'tableList',
@@ -68,20 +88,33 @@ export default {
         expandBtnText: '',
         alertText: ''
       },
-      tableItems: []
+      tableItems: [],
+      total: 0,
+      pageSize: 20,
+      pageSizes: [20, 50, 80, 120],
+      loading: false,
+      multipleSelection: [],
+      currentPage: 1
     }
   },
   methods: {
     // 业务方法
     doQuery() {
+      this.loading = true
       this.barSearch.alertText = ''
-      list({}).then(res => {
-        console.log(res.data)
-        this.tableItems = res.data.items
-        this.barSearch.alertText = `共 ${res.data.total} 条记录`
-      }).catch(err => {
-        console.log(err)
-      })
+      this.tableItems = []
+      list({})
+        .then(res => {
+          console.log(res.data)
+          this.tableItems = res.data.items
+          this.total = res.data.total
+          this.barSearch.alertText = `共 ${this.total} 条记录`
+          this.loading = false
+        })
+        .catch(err => {
+          console.log(err)
+          this.loading = false
+        })
     },
     // UI方法
     handleRest() {
@@ -99,10 +132,22 @@ export default {
     },
     handleExpand() {
       this.barSearch.expandInputs = !this.barSearch.expandInputs
-      this.barSearch.expandBtnText = this.barSearch.expandInputs ? '收起▲' : '展开▼'
+      this.barSearch.expandBtnText = this.barSearch.expandInputs
+        ? '收起▲'
+        : '展开▼'
     },
     handleSearch() {
       this.doQuery()
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+      console.log(val, this.multipleSelection)
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
     }
   },
   created() {
@@ -115,5 +160,19 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .alert {
   margin: 10px 0px;
+}
+.pagination {
+  margin-top: 10px;
+  text-align: right;
+}
+</style>
+
+<style>
+.el-table th {
+  background-color: #fafafa;
+  border-bottom: 1px solid #e8e8e8;
+}
+.el-table th.is-leaf {
+  border-bottom: 2px solid #e8e8e8 !important;
 }
 </style>
