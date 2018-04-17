@@ -32,13 +32,13 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="handleSearch">查询</el-button>
             <el-button @click="handleRest">重置</el-button>
             <el-button type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
           </el-form-item>
         </el-form>
         <el-button type="primary" icon="el-icon-plus" size="small">新建</el-button>
-        <el-alert title="共 1669 条记录" type="info" close-text="知道了" class="alert" show-icon></el-alert>
+        <el-alert v-if="barSearch.alertText !== ''" :title="barSearch.alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
         <!-- 搜索栏 / -->
       </el-card>
     </div>
@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { list } from '@/api/example/table'
+
 export default {
   name: 'tableList',
   data() {
@@ -63,11 +65,25 @@ export default {
       },
       barSearch: {
         expandInputs: false,
-        expandBtnText: ''
-      }
+        expandBtnText: '',
+        alertText: ''
+      },
+      tableItems: []
     }
   },
   methods: {
+    // 业务方法
+    doQuery() {
+      this.barSearch.alertText = ''
+      list({}).then(res => {
+        console.log(res.data)
+        this.tableItems = res.data.items
+        this.barSearch.alertText = `共 ${res.data.total} 条记录`
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    // UI方法
     handleRest() {
       this.formSearch = {
         user: '',
@@ -84,6 +100,9 @@ export default {
     handleExpand() {
       this.barSearch.expandInputs = !this.barSearch.expandInputs
       this.barSearch.expandBtnText = this.barSearch.expandInputs ? '收起▲' : '展开▼'
+    },
+    handleSearch() {
+      this.doQuery()
     }
   },
   created() {
