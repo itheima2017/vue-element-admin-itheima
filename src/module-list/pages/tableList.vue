@@ -107,8 +107,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="handleSave(false)">取 消</el-button>
+        <el-button type="primary" @click="handleSave(true)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 弹出窗 / -->
@@ -158,9 +158,7 @@ export default {
           {required: true, message: '请输入作者', trigger: 'blur'},
           {min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur'}
         ],
-        type: [
-          {required: true, message: '请选择类型', trigger: 'change'}
-        ]
+        type: [{required: true, message: '请选择类型', trigger: 'change'}]
       }
     }
   },
@@ -250,9 +248,30 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
+    handleSave(isSave) {
+      if (isSave) {
+        this.$refs['dataForm'].validate(valid => {
+          if (valid) {
+            this.dialogVisible = false
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+          } else {
+            return false
+          }
+        })
+      } else {
+        this.dialogVisible = false
+      }
+    },
     handleDelete(item) {
       this.$confirm('确认删除？')
         .then(ret => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
           console.log(ret)
         })
         .catch(ret => {
