@@ -6,7 +6,10 @@
     margin-left: 180px;
   } // 侧边栏
   .sidebar-container {
+    -webkit-box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
     transition: width 0.28s;
+    background-color: #001529;
     width: 180px!important;
     height: 100%;
     position: fixed;
@@ -101,6 +104,9 @@
     background-color: $subMenuBg!important;
     &:hover {
       background-color: $menuHover!important;
+      span {
+        color: #fff;
+      }
     }
   }
   .el-menu--collapse .el-menu .el-submenu{
@@ -108,12 +114,20 @@
   }
   // logo标志
   .sidebar-logo ,.sidebar-logo-mini {
-    color: rgb(191, 203, 217);
-    font-size: 28px;
+    font-size: 20px;
     text-align: center;
     line-height: 56px;
     margin: 0px;
     padding: 0px;
+    background-color: #002140;
+    color: #fff;
+    font-weight: 600;
+    font-family: "Myriad Pro","Helvetica Neue",Arial,Helvetica,sans-serif;
+    img {
+      width: 160px;
+      padding: 0px;
+      margin: 5px;
+    }
   }
   .sidebar-logo {
     width:180px;
@@ -123,6 +137,11 @@
     display: none;
     width:36px;
     height:56px;
+    img {
+      width: 32px;
+      padding: 0px;
+      margin: 10px 0px;
+    }
   }
   .hideSidebar {
     .sidebar-logo {
@@ -131,5 +150,20 @@
     .sidebar-logo-mini {
       display: block;
     }
+  }
+  .el-menu-item.is-active {
+    background-color: #1890ff!important;
+    &:hover {
+      background-color: #1890ff!important;
+    }
+  }
+  .el-submenu.is-active .el-submenu__title {
+    color: #fff!important;
+    .el-submenu__icon-arrow {
+      color: #fff!important;
+    }
+  }
+  .el-submenu__icon-arrow {
+    font-weight: 600;
   }
 }
