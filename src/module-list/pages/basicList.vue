@@ -1,6 +1,7 @@
 <template>
-  <div class="dashboard-container basic-list" v-loading="loading">
-    <el-card shadow="never">
+  <div class="dashboard-container" v-loading="loading">
+    <!-- 搜索框 -->
+    <el-card shadow="never" class="basic-list-query">
       <div class="search">
         <el-input placeholder="请输入内容" v-model="barSearch.keyword" class="input-with-select">
           <el-select v-model="barSearch.selectKind" slot="prepend" placeholder="请选择">
@@ -17,15 +18,32 @@
         <el-tab-pane label="项目" name="third"></el-tab-pane>
       </el-tabs>
     </el-card>
+    <!-- 搜索框 / -->
     <div class="app-container">
-      <el-card shadow="never">
+      <!-- 筛选框 -->
+      <el-card shadow="never" class="basic-list-bar">
+        <el-form ref="barSearch" label-position="left" :model="barSearch" label-width="50px">
+          <el-form-item label="类型:" class="item">
+            <el-checkbox class="left marginr30"
+              :indeterminate="barSearch.isIndeterminate" 
+              v-model="barSearch.checkedTypesAll" 
+              @change="handlecheckedTypesAllChange">全选</el-checkbox>
+            <el-checkbox-group v-model="barSearch.checkedTypes" @change="handleCheckedTypesChange">
+              <el-checkbox class="left" v-for="item in barSearch.typesList" :label="item" :key="item">{{item}}</el-checkbox>
+            </el-checkbox-group>
+            <el-button class="btnExpand" type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
+          </el-form-item>
+        </el-form>
       </el-card>
+      <!-- 筛选框 / -->
+      <!-- 数据列表 -->
+      <!-- 数据列表 / -->
     </div>
   </div>
 </template>
 
 <script>
-import {list} from '@/api/example/articles'
+import {list, types} from '@/api/example/articles'
 
 export default {
   name: 'basic-list',
@@ -36,7 +54,11 @@ export default {
         activeName: 'first',
         selectKind: '1',
         expandInputs: false,
-        expandBtnText: ''
+        expandBtnText: '',
+        typesList: types,
+        checkedTypesAll: false,
+        checkedTypes: [],
+        isIndeterminate: false
       },
       items: [],
       pagination: {
@@ -79,6 +101,16 @@ export default {
     },
     handleTabName(tab, event) {
       console.log(tab, event)
+    },
+    handlecheckedTypesAllChange(val) {
+      this.barSearch.checkedTypes = val ? types : []
+      this.barSearch.isIndeterminate = false
+    },
+    handleCheckedTypesChange(value) {
+      let checkedCount = value.length
+      this.barSearch.checkedTypesAll = checkedCount === this.barSearch.checkedTypes.length
+      this.barSearch.isIndeterminate =
+        checkedCount > 0 && checkedCount < types.length
     }
   },
   created() {
@@ -89,7 +121,8 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-.basic-list {
+// 搜索栏
+.basic-list-query {
   .el-card__body {
     padding: 20px 20px 0px 20px;
   }
@@ -109,7 +142,30 @@ export default {
     }
   }
 }
+// 筛选栏位
+.basic-list-bar {
+  .el-checkbox__input {
+    display: none;
+  }
+  .el-checkbox__label {
+    padding-left: 0px;
+  }
+  .item {
+    display: block;
+    border-bottom: 1px dashed #e8e8e8;
+    .btnExpand {
+      display: left;
+      margin-left: 50px;
+    }
+  }
+}
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.left {
+  float: left;
+}
+.marginr30 {
+  margin-right: 30px;
+}
 </style>
