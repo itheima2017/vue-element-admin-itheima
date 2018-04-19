@@ -23,15 +23,20 @@
       <!-- 筛选框 -->
       <el-card shadow="never" class="basic-list-bar">
         <el-form ref="barSearch" label-position="left" :model="barSearch" label-width="50px">
-          <el-form-item label="类型:" class="item">
-            <el-checkbox class="left marginr30"
-              :indeterminate="barSearch.isIndeterminate" 
-              v-model="barSearch.checkedTypesAll" 
-              @change="handlecheckedTypesAllChange">全选</el-checkbox>
-            <el-checkbox-group v-model="barSearch.checkedTypes" @change="handleCheckedTypesChange">
-              <el-checkbox class="left" v-for="item in barSearch.typesList" :label="item" :key="item">{{item}}</el-checkbox>
-            </el-checkbox-group>
-            <el-button class="btnExpand" type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
+          <el-form-item label="类型:" :class="['row', 'auto-hidden', { 'expand': barSearch.expandInputs }]">
+            <el-row>
+              <el-col :span="2">
+                <el-checkbox :indeterminate="barSearch.isIndeterminate"  v-model="barSearch.checkedTypesAll" @change="handlecheckedTypesAllChange">全选</el-checkbox>
+              </el-col>
+              <el-col :span="20">
+                <el-checkbox-group v-model="barSearch.checkedTypes" @change="handleCheckedTypesChange" >
+                  <el-checkbox v-for="item in barSearch.typesList" :label="item" :key="item">{{item}}</el-checkbox>
+                </el-checkbox-group>
+              </el-col>
+              <el-col :span="2">
+                <el-button type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
+              </el-col>
+            </el-row>
           </el-form-item>
         </el-form>
       </el-card>
@@ -150,22 +155,18 @@ export default {
   .el-checkbox__label {
     padding-left: 0px;
   }
-  .item {
-    display: block;
+  .row {
+    max-height: 36px;
     border-bottom: 1px dashed #e8e8e8;
-    .btnExpand {
-      display: left;
-      margin-left: 50px;
+    &.auto-hidden {
+      overflow: hidden;
+    }
+    &.expand {
+      max-height: 82px;
     }
   }
 }
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.left {
-  float: left;
-}
-.marginr30 {
-  margin-right: 30px;
-}
 </style>
