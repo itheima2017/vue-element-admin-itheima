@@ -52,7 +52,7 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item label="活动区域">
-                  <el-select placeholder="选择" style="margin-bottom:16px;">
+                  <el-select v-model="barSearch.region" placeholder="选择" style="margin-bottom:16px;">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                   </el-select>
@@ -60,7 +60,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="好评度">
-                  <el-select placeholder="选择" style="margin-bottom:16px;">
+                  <el-select v-model="barSearch.goods" placeholder="选择" style="margin-bottom:16px;">
                     <el-option label="优秀" value="good"></el-option>
                     <el-option label="一般" value="general"></el-option>
                   </el-select>
@@ -72,6 +72,8 @@
       </el-card>
       <!-- 筛选框 / -->
       <!-- 数据列表 -->
+      <el-card shadow="never" class="basic-list-content">
+      </el-card>
       <!-- 数据列表 / -->
     </div>
   </div>
@@ -94,7 +96,9 @@ export default {
         checkedTypesAll: false,
         checkedTypes: [],
         isIndeterminate: false,
-        selOption: ''
+        selOption: '',
+        region: '',
+        goods: ''
       },
       options: [
         {
@@ -225,8 +229,10 @@ export default {
     }
   }
 }
+.basic-list-content {
+  margin-top: 20px;
+}
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-
 </style>
