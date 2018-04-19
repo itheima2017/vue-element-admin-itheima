@@ -218,6 +218,11 @@ export default {
     &.expand {
       max-height: 82px;
     }
+    &:last-child {
+      border: none;
+      margin: 0px;
+      padding: 0px;
+    }
   }
 }
 </style>
