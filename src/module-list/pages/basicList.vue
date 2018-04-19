@@ -22,7 +22,7 @@
     <div class="app-container">
       <!-- 筛选框 -->
       <el-card shadow="never" class="basic-list-bar">
-        <el-form ref="barSearch" label-position="left" :model="barSearch" label-width="50px">
+        <el-form ref="barSearch" label-position="left" :model="barSearch" label-width="80px">
           <el-form-item label="类型:" :class="['row', 'auto-hidden', { 'expand': barSearch.expandInputs }]">
             <el-row>
               <el-col :span="2">
@@ -35,6 +35,36 @@
               </el-col>
               <el-col :span="2">
                 <el-button type="text" @click="handleExpand">{{barSearch.expandBtnText}}</el-button>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="点心:" class="row">
+            <el-select v-model="barSearch.selOption" style="margin-bottom:16px;" allow-create filterable multiple placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="其它:" class="row">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="活动区域">
+                  <el-select placeholder="选择" style="margin-bottom:16px;">
+                    <el-option label="区域一" value="shanghai"></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="好评度">
+                  <el-select placeholder="选择" style="margin-bottom:16px;">
+                    <el-option label="优秀" value="good"></el-option>
+                    <el-option label="一般" value="general"></el-option>
+                  </el-select>
+                </el-form-item>
               </el-col>
             </el-row>
           </el-form-item>
@@ -63,8 +93,31 @@ export default {
         typesList: types,
         checkedTypesAll: false,
         checkedTypes: [],
-        isIndeterminate: false
+        isIndeterminate: false,
+        selOption: ''
       },
+      options: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        },
+        {
+          value: '选项2',
+          label: '双皮奶'
+        },
+        {
+          value: '选项3',
+          label: '蚵仔煎'
+        },
+        {
+          value: '选项4',
+          label: '龙须面'
+        },
+        {
+          value: '选项5',
+          label: '北京烤鸭'
+        }
+      ],
       items: [],
       pagination: {
         total: 0,
@@ -113,7 +166,8 @@ export default {
     },
     handleCheckedTypesChange(value) {
       let checkedCount = value.length
-      this.barSearch.checkedTypesAll = checkedCount === this.barSearch.checkedTypes.length
+      this.barSearch.checkedTypesAll =
+        checkedCount === this.barSearch.checkedTypes.length
       this.barSearch.isIndeterminate =
         checkedCount > 0 && checkedCount < types.length
     }
@@ -156,9 +210,9 @@ export default {
     padding-left: 0px;
   }
   .row {
-    max-height: 36px;
     border-bottom: 1px dashed #e8e8e8;
     &.auto-hidden {
+      max-height: 50px;
       overflow: hidden;
     }
     &.expand {
@@ -169,4 +223,5 @@ export default {
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+
 </style>
