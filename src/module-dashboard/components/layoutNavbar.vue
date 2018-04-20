@@ -20,6 +20,8 @@
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
           <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+          <span class="user-name">{{name}}</span>
+          <!-- <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'"> -->
           <i class="el-icon-caret-bottom"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -110,6 +112,7 @@ export default {
       margin: 0 8px;
     }
     .screenfull {
+      margin-top: 15px;
       height: 20px;
     }
     .international{
@@ -125,15 +128,25 @@ export default {
         cursor: pointer;
         margin-top: 5px;
         position: relative;
+        width: 100px;
         .user-avatar {
           width: 40px;
           height: 40px;
           border-radius: 10px;
         }
+        .user-name {
+          position:absolute;
+          top: -5px;
+          left: 45px;
+          right: 0px;
+          width: 60px;
+          height: 50px;
+          overflow: hidden;
+        }
         .el-icon-caret-bottom {
           position: absolute;
           right: -20px;
-          top: 25px;
+          top: 15px;
           font-size: 12px;
         }
       }
