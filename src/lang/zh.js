@@ -20,6 +20,7 @@ export default {
     advancedList: '高级表单'
   },
   navbar: {
+    search: '站内搜索',
     logOut: '退出登录',
     dashboard: '首页',
     github: '项目地址',

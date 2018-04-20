@@ -20,6 +20,7 @@ export default {
     advancedList: 'advanced form'
   },
   navbar: {
+    search: 'search',
     logOut: 'Log Out',
     dashboard: 'Dashboard',
     github: 'Github',

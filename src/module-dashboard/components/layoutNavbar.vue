@@ -7,7 +7,9 @@
     <div class="right-menu">
       <!-- 站内搜索 -->
       <div class="item">
-        <el-button icon="el-icon-search" type="text" class="btnSearch" @click="handleBtnSearch"></el-button>
+        <el-tooltip effect="dark" :content="$t('navbar.search')" placement="bottom">
+          <el-button icon="el-icon-search" type="text" class="btnSearch" @click="handleBtnSearch"></el-button>
+        </el-tooltip>
         <transition name="el-fade-in-linear">
           <el-autocomplete 
             ref="searchInput"
