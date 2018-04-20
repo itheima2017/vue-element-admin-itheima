@@ -8,8 +8,9 @@ for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
     id: '@increment',
     title: '@ctitle',
+    author: '@cname',
     tags: ['html', 'javascript', 'css'],
-    description: '@csentence(15, 45)',
+    description: '@csentence(50, 350)',
     url: '@url',
     timestamp: +Mock.Random.date('T'),
     displayTime: '@datetime',

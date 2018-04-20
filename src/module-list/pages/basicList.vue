@@ -9,7 +9,7 @@
             <el-option label="描述" value="2"></el-option>
             <el-option label="网址" value="3"></el-option>
           </el-select>
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="doQuery(1, 20)"></el-button>
         </el-input>
       </div>
       <el-tabs v-model="barSearch.activeName" @tab-click="handleTabName">
@@ -73,6 +73,30 @@
       <!-- 筛选框 / -->
       <!-- 数据列表 -->
       <el-card shadow="never" class="basic-list-content">
+        <!-- 数据项 -->
+        <div class="item" v-for="(item, index) in items" :key="'item-'+index">
+          <h4>{{item.title}}</h4>
+          <div>
+            <el-tag>Java学科</el-tag>
+            <el-tag>设计语言</el-tag>
+            <el-tag>UI设计</el-tag>
+          </div>
+          <p>
+            {{item.description}}
+          </p>
+          <div>
+            {{item.author}} 发布在 <a href="" target="_blank">{{item.url}}</a> {{item.displayTime}}
+          </div>
+          <div>
+            <el-button icon="el-icon-star-off" type="text">{{item.stars}}</el-button>
+            <el-button icon="el-icon-view" type="text">{{item.likes}}</el-button>
+            <el-button icon="el-icon-message" type="text">{{item.messages}}</el-button>
+          </div>
+        </div>
+        <!-- 更多按钮 -->
+        <div class="btnMore">
+          <el-button v-loading="moreLoading" @click="handleLoadMore">加载更多</el-button>
+        </div>
       </el-card>
       <!-- 数据列表 / -->
     </div>
@@ -129,7 +153,8 @@ export default {
         pageSizes: [20, 50, 80, 120],
         currentPage: 1
       },
-      loading: false
+      loading: false,
+      moreLoading: false
     }
   },
   methods: {
@@ -174,11 +199,32 @@ export default {
         checkedCount === this.barSearch.checkedTypes.length
       this.barSearch.isIndeterminate =
         checkedCount > 0 && checkedCount < types.length
+    },
+    handleLoadMore() {
+      this.pagination.currentPage++
+      this.pagination.pageSize = 20
+      this.moreLoading = true
+      list(
+        {
+        page: this.pagination.currentPage,
+        limit: this.pagination.pageSize
+        })
+        .then(res => {
+          console.log(res.data)
+          this.items = this.items.concat(res.data.items)
+          this.pagination.total = res.data.total
+          this.moreLoading = false
+        })
+        .catch(err => {
+          console.log(err)
+          this.moreLoading = false
+        })
     }
   },
   created() {
     this.barSearch.expandInputs = false
     this.barSearch.expandBtnText = '展开▼'
+    this.doQuery()
   }
 }
 </script>
@@ -231,6 +277,19 @@ export default {
 }
 .basic-list-content {
   margin-top: 20px;
+  .item {
+    border-bottom: 1px solid #e8e8e8;
+    a {
+      color: #1890ff;
+    }
+    &:last-child {
+      border: none;
+    }
+  }
+  .btnMore {
+    margin: 20px 0px;
+    text-align: center;
+  }
 }
 </style>
 
