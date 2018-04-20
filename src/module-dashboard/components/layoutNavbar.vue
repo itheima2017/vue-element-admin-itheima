@@ -6,9 +6,10 @@
 
     <div class="right-menu">
       <div class="search-item">
-        <el-button icon="el-icon-search" type="text" class="btnSearch" @click="showSearchInput = !showSearchInput"></el-button>
+        <el-button icon="el-icon-search" type="text" class="btnSearch" @click="handleBtnSearch"></el-button>
         <transition name="el-fade-in-linear">
           <el-autocomplete 
+            ref="searchInput"
             v-model="searchVal" 
             :fetch-suggestions="querySearchAsync" 
             @select="handleSelect" 
@@ -58,6 +59,12 @@ export default {
     logout() {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // In order to re-instantiate the vue-router object to avoid bugs
+      })
+    },
+    handleBtnSearch() {
+      this.showSearchInput = !this.showSearchInput
+      this.$nextTick(() => {
+        this.$refs['searchInput'].focus()
       })
     },
     querySearchAsync(queryString, cb) {
