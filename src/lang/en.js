@@ -24,7 +24,9 @@ export default {
     dashboard: 'Dashboard',
     github: 'Github',
     screenfull: 'screenfull',
-    theme: 'theme'
+    theme: 'theme',
+    lang: 'i18n',
+    error: 'error log'
   },
   login: {
     title: 'itheima login',

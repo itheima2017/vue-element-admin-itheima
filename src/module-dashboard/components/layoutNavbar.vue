@@ -11,7 +11,7 @@
         <transition name="el-fade-in-linear">
           <el-autocomplete 
             ref="searchInput"
-            v-model="searchVal" 
+            v-model="searchVal"
             :fetch-suggestions="querySearchAsync" 
             @select="handleSelect" 
             @blur="showSearchInput = false"
@@ -24,10 +24,40 @@
       <a href="http://research.itcast.cn/vue-element-admin-doc-itheima" class="item" target="_blank">
         <el-tooltip class="item" effect="dark" content="使用文档" placement="bottom"><i class="el-icon-question"></i></el-tooltip>
       </a>
+      <!-- 错误 -->
+      <error-log class="error item"></error-log>
       <!-- 全屏 -->
       <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
         <screenfull class="item"></screenfull>
       </el-tooltip>
+      <!-- 多语言 -->
+      <lang-select class="item"></lang-select>
+      <!-- 换肤 -->
+      <el-tooltip effect="dark" :content="$t('navbar.theme')" placement="bottom">
+        <theme-picker class="item"></theme-picker>
+      </el-tooltip>
+      <!-- 用户信息 -->
+      <el-dropdown class="item">
+        <span class="el-dropdown-link">
+          <img class="avatar" src="../assets/bigUserHeader.png">
+          {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <router-link to="/">
+            <el-dropdown-item>
+              {{$t('navbar.dashboard')}}
+            </el-dropdown-item>
+          </router-link>
+          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+            <el-dropdown-item>
+              {{$t('navbar.github')}}
+            </el-dropdown-item>
+          </a>
+          <el-dropdown-item divided>
+            <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </el-menu>
 </template>
@@ -118,14 +148,6 @@ export default {
   border-bottom: 1px solid #dcdfe6;
   border-radius: 0px;
 }
-.screenfull-svg {
-  display: inline-block;
-  cursor: pointer;
-  fill: #5a5e66;
-  width: 20px;
-  height: 20px;
-  vertical-align: -3px;
-}
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -150,14 +172,19 @@ export default {
     float: right;
     height: 50px;
     .item {
-      display: inline;
+      display: inline-block;
       margin-right: 10px;
       i {
         font-size: 18px;
       }
       .btnSearch {
+        margin-right: 5px;
         font-size: 18px;
         color: rgba(0, 0, 0, 0.65);
+      }
+      .avatar {
+        width: 22px;
+        vertical-align: -5px;
       }
     } 
   }
