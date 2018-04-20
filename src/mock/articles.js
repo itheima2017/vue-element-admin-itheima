@@ -9,6 +9,7 @@ for (let i = 0; i < count; i++) {
     id: '@increment',
     title: '@ctitle',
     author: '@cname',
+    'icon|1': ['alipay', 'angular', 'antDesign', 'antDesignPro', 'bootstrap', 'vue', 'webpack'],
     tags: ['html', 'javascript', 'css'],
     description: '@csentence(50, 350)',
     url: '@url',
