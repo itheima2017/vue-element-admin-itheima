@@ -5,7 +5,8 @@
     <breadcrumb class="breadcrumb-container"></breadcrumb>
 
     <div class="right-menu">
-      <div class="search-item">
+      <!-- 站内搜索 -->
+      <div class="item">
         <el-button icon="el-icon-search" type="text" class="btnSearch" @click="handleBtnSearch"></el-button>
         <transition name="el-fade-in-linear">
           <el-autocomplete 
@@ -13,10 +14,20 @@
             v-model="searchVal" 
             :fetch-suggestions="querySearchAsync" 
             @select="handleSelect" 
+            @blur="showSearchInput = false"
             placeholder="站内搜索" 
+            :trigger-on-focus="true"
             v-show="showSearchInput" ></el-autocomplete>
         </transition>
       </div>
+      <!-- 使用文档 -->
+      <a href="http://research.itcast.cn/vue-element-admin-doc-itheima" class="item" target="_blank">
+        <el-tooltip class="item" effect="dark" content="使用文档" placement="bottom"><i class="el-icon-question"></i></el-tooltip>
+      </a>
+      <!-- 全屏 -->
+      <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
+        <screenfull class="item"></screenfull>
+      </el-tooltip>
     </div>
   </el-menu>
 </template>
@@ -102,10 +113,18 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-.navbar .search-item .el-input__inner {
+.navbar .item .el-input__inner {
   border: 0px;
   border-bottom: 1px solid #dcdfe6;
   border-radius: 0px;
+}
+.screenfull-svg {
+  display: inline-block;
+  cursor: pointer;
+  fill: #5a5e66;
+  width: 20px;
+  height: 20px;
+  vertical-align: -3px;
 }
 </style>
 
@@ -130,11 +149,17 @@ export default {
   .right-menu {
     float: right;
     height: 50px;
-    margin-right: 20px;
-    .search-item > .btnSearch {
-      font-size: 16px;
-      color: rgba(0, 0, 0, 0.65);
-    }
+    .item {
+      display: inline;
+      margin-right: 10px;
+      i {
+        font-size: 18px;
+      }
+      .btnSearch {
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+    } 
   }
 }
 </style>
