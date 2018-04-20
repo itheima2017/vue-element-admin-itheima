@@ -77,14 +77,13 @@
         <div class="item" v-for="(item, index) in items" :key="'item-'+index">
           <h4>{{item.title}}</h4>
           <div>
-            <el-tag>Java学科</el-tag>
-            <el-tag>设计语言</el-tag>
-            <el-tag>UI设计</el-tag>
+            <el-tag class="tag" v-for="(tag, ix) in item.tags" :key="'tag'+ix">{{tag}}</el-tag>
           </div>
           <p>
             {{item.description}}
           </p>
           <div>
+            <img :src="`http://or45inefq.bkt.clouddn.com/${item.icon}.png`" class="image">
             {{item.author}} 发布在 <a href="" target="_blank">{{item.url}}</a> {{item.displayTime}}
           </div>
           <div>
@@ -285,6 +284,14 @@ export default {
     &:last-child {
       border: none;
     }
+  }
+  .image {
+    width: 16px;
+    height: 16px;
+    border-radius: 48px;
+  }
+  .tag {
+    margin-right: 5px;
   }
   .btnMore {
     margin: 20px 0px;
