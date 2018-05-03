@@ -1,7 +1,9 @@
 <template>
   <el-dropdown trigger="click" class='international' @command="handleSetLanguage">
     <div>
-      <svg-icon class-name='international-icon' icon-class="language" />
+      <el-tooltip effect="dark" :content="$t('navbar.lang')" placement="bottom">
+        <svg-icon class-name='international-icon' icon-class="language" />
+      </el-tooltip>
     </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item command="zh" :disabled="language==='zh'">中文</el-dropdown-item>
@@ -34,6 +36,7 @@ export default {
 .international-icon {
   font-size: 20px;
   cursor: pointer;
-  vertical-align: -5px !important;
+  vertical-align: -4px !important;
+  margin-right: 10px;
 }
 </style>

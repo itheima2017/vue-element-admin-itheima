@@ -20,11 +20,14 @@ export default {
     advancedList: '高级表单'
   },
   navbar: {
+    search: '站内搜索',
     logOut: '退出登录',
     dashboard: '首页',
     github: '项目地址',
     screenfull: '全屏',
-    theme: '换肤'
+    theme: '换肤',
+    lang: '多语言',
+    error: '错误日志'
   },
   login: {
     title: '黑马Admin',

@@ -5,30 +5,52 @@
     <breadcrumb class="breadcrumb-container"></breadcrumb>
 
     <div class="right-menu">
-      <error-log class="errLog-container right-menu-item"></error-log>
-
+      <!-- 站内搜索 -->
+      <div class="item">
+        <el-tooltip effect="dark" :content="$t('navbar.search')" placement="bottom">
+          <el-button icon="el-icon-search" type="text" class="btnSearch" @click="handleBtnSearch"></el-button>
+        </el-tooltip>
+        <transition name="el-fade-in-linear">
+          <el-autocomplete 
+            ref="searchInput"
+            v-model="searchVal"
+            :fetch-suggestions="querySearchAsync" 
+            @select="handleSelect" 
+            @blur="showSearchInput = false"
+            placeholder="站内搜索" 
+            :trigger-on-focus="true"
+            v-show="showSearchInput" ></el-autocomplete>
+        </transition>
+      </div>
+      <!-- 使用文档 -->
+      <a href="http://research.itcast.cn/vue-element-admin-doc-itheima" class="item" target="_blank">
+        <el-tooltip class="item" effect="dark" content="使用文档" placement="bottom"><i class="el-icon-question"></i></el-tooltip>
+      </a>
+      <!-- 错误 -->
+      <error-log class="error item"></error-log>
+      <!-- 全屏 -->
       <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
-        <screenfull class="screenfull right-menu-item"></screenfull>
+        <screenfull class="item"></screenfull>
       </el-tooltip>
-
-      <lang-select class="international right-menu-item"></lang-select>
-
+      <!-- 多语言 -->
+      <lang-select class="item"></lang-select>
+      <!-- 换肤 -->
       <el-tooltip effect="dark" :content="$t('navbar.theme')" placement="bottom">
-        <theme-picker class="theme-switch right-menu-item"></theme-picker>
+        <theme-picker class="item"></theme-picker>
       </el-tooltip>
-
-      <el-dropdown class="avatar-container right-menu-item" trigger="click">
-        <div class="avatar-wrapper">
-          <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
-          <i class="el-icon-caret-bottom"></i>
-        </div>
+      <!-- 用户信息 -->
+      <el-dropdown class="item">
+        <span class="el-dropdown-link">
+          <img class="avatar" src="../assets/bigUserHeader.png">
+          {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
               {{$t('navbar.dashboard')}}
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/itheima2017/vue-element-admin-itheima">
+          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
               {{$t('navbar.github')}}
             </el-dropdown-item>
@@ -43,13 +65,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import LangSelect from '@/components/LangSelect'
 import ThemePicker from '@/components/ThemePicker'
+import {search} from '@/api/base/menus'
 
 export default {
   name: 'layoutNavBar',
@@ -62,11 +85,15 @@ export default {
     ThemePicker
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'name',
-      'avatar'
-    ])
+    ...mapGetters(['sidebar', 'name', 'avatar'])
+  },
+  data() {
+    return {
+      searchVal: '',
+      timeout: null,
+      showSearchInput: false,
+      restaurants: []
+    }
   },
   methods: {
     toggleSideBar() {
@@ -74,12 +101,56 @@ export default {
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
-        location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+        location.reload() // In order to re-instantiate the vue-router object to avoid bugs
+      })
+    },
+    handleBtnSearch() {
+      this.showSearchInput = !this.showSearchInput
+      this.$nextTick(() => {
+        this.$refs['searchInput'].focus()
+      })
+    },
+    querySearchAsync(queryString, cb) {
+      var restaurants = this.restaurants
+      var results = queryString
+        ? restaurants.filter(this.createStateFilter(queryString))
+        : restaurants
+
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        cb(results)
+      }, 1000 * Math.random())
+    },
+    createStateFilter(queryString) {
+      return state => {
+        return (
+          state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        )
+      }
+    },
+    handleSelect(item) {
+      this.searchVal = ''
+      this.showSearchInput = false
+      console.log(item)
+      this.$message({
+        message: `选取了 ${item.value}`,
+        type: 'success'
       })
     }
+  },
+  mounted() {
+    this.restaurants = search()
   }
 }
 </script>
+
+<style rel="stylesheet/scss" lang="scss">
+.navbar .item .el-input__inner {
+  border: 0px;
+  border-bottom: 1px solid #dcdfe6;
+  border-radius: 0px;
+}
+</style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
@@ -92,7 +163,7 @@ export default {
     float: left;
     padding: 0 10px;
   }
-  .breadcrumb-container{
+  .breadcrumb-container {
     float: left;
   }
   .errLog-container {
@@ -101,43 +172,23 @@ export default {
   }
   .right-menu {
     float: right;
-    height: 100%;
-    &:focus{
-     outline: none;
-    }
-    .right-menu-item {
+    height: 50px;
+    .item {
       display: inline-block;
-      margin: 0 8px;
-    }
-    .screenfull {
-      height: 20px;
-    }
-    .international{
-      vertical-align: top;
-    }
-    .theme-switch {
-      vertical-align: 15px;
-    }
-    .avatar-container {
-      height: 50px;
-      margin-right: 30px;
-      .avatar-wrapper {
-        cursor: pointer;
-        margin-top: 5px;
-        position: relative;
-        .user-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-        .el-icon-caret-bottom {
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
+      margin-right: 10px;
+      i {
+        font-size: 18px;
       }
-    }
+      .btnSearch {
+        margin-right: 5px;
+        font-size: 18px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+      .avatar {
+        width: 22px;
+        vertical-align: -5px;
+      }
+    } 
   }
 }
 </style>

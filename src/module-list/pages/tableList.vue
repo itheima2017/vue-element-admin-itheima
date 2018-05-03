@@ -66,8 +66,8 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-              <el-button type="text" size="small">编辑</el-button>
+              <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
+              <el-button @click="handleDelete(scope.row)" type="text" size="small">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -90,17 +90,25 @@
       :visible.sync="dialogVisible"
       width="30%"
       :before-close="handleClose">
-      <el-form :model="formData" label-width="50px" label-position="right">
-        <el-form-item label="标题">
+      <el-form :rules="rules" ref="dataForm" :model="formData" label-width="50px" label-position="right">
+        <el-form-item label="标题" prop="title">
           <el-input v-model="formData.title" placeholder="标题"></el-input>
         </el-form-item>
-        <el-form-item label="作者">
+        <el-form-item label="作者" prop="author">
           <el-input v-model="formData.author" placeholder="作者"></el-input>
+        </el-form-item>
+        <el-form-item label="类型" prop="type">
+          <el-select v-model="formData.type" placeholder="类型">
+            <el-option label="CN" value="CN"></el-option>
+            <el-option label="US" value="US"></el-option>
+            <el-option label="JP" value="JP"></el-option>
+            <el-option label="EU" value="EU"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="handleSave(false)">取 消</el-button>
+        <el-button type="primary" @click="handleSave(true)">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 弹出窗 / -->
@@ -140,7 +148,18 @@ export default {
       loading: false,
       multipleSelection: [],
       dialogVisible: false,
-      formData: []
+      formData: [],
+      rules: {
+        title: [
+          {required: true, message: '请输入标题', trigger: 'blur'},
+          {min: 5, max: 45, message: '长度在 5 到 45 个字符', trigger: 'blur'}
+        ],
+        author: [
+          {required: true, message: '请输入作者', trigger: 'blur'},
+          {min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur'}
+        ],
+        type: [{required: true, message: '请选择类型', trigger: 'change'}]
+      }
     }
   },
   methods: {
@@ -212,9 +231,52 @@ export default {
     handleNew() {
       this.formData = {
         title: '',
-        author: ''
+        author: '',
+        type: ''
       }
       this.dialogVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleEdit(item) {
+      this.formData = {
+        ...item
+      }
+      this.dialogVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleSave(isSave) {
+      if (isSave) {
+        this.$refs['dataForm'].validate(valid => {
+          if (valid) {
+            this.dialogVisible = false
+            this.$message({
+              message: '保存成功',
+              type: 'success'
+            })
+          } else {
+            return false
+          }
+        })
+      } else {
+        this.dialogVisible = false
+      }
+    },
+    handleDelete(item) {
+      this.$confirm('确认删除？')
+        .then(ret => {
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          console.log(ret)
+        })
+        .catch(ret => {
+          console.log(ret)
+        })
     }
   },
   created() {

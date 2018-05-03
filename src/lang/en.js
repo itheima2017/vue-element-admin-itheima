@@ -20,11 +20,14 @@ export default {
     advancedList: 'advanced form'
   },
   navbar: {
+    search: 'search',
     logOut: 'Log Out',
     dashboard: 'Dashboard',
     github: 'Github',
     screenfull: 'screenfull',
-    theme: 'theme'
+    theme: 'theme',
+    lang: 'i18n',
+    error: 'error log'
   },
   login: {
     title: 'itheima login',
