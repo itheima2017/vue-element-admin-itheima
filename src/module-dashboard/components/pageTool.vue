@@ -1,6 +1,5 @@
 <template>
   <div class="pages">
-    <span class="fl el-pagination__total">共 <span class="blue">{{total}}</span> 条数据</span>
       <el-pagination background 
       @size-change="onPageSizeChange" 
       @current-change="onPageChange" 
@@ -9,7 +8,7 @@
       :page-size="Number(paginationPagesize)" 
       :page-sizes="[10,20,30, 50]" 
       layout="sizes, prev, pager, next, jumper" 
-      class="fr">
+      >
       </el-pagination>
   </div>
 </template>

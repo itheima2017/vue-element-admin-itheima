@@ -45,6 +45,7 @@
   
   </div>
 </template>
+
 <script>
 import { detail, update, add } from '@/api/base/users'
 export default {

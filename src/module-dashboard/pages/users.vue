@@ -1,122 +1,107 @@
 <template>
   <div class="dashboard-container">
-     <div class="app-container calendar-list-container">
+    <div class="app-container">
+      <el-card shadow="never">
        <!-- 搜索 -->
-       <el-form :model="requestParameters" ref="requestParameters" label-width="100px" class="demo-dynamic">
-        <div class="filter-container">
-          <el-form-item prop="username">
-            <el-input @keyup.enter="handleFilter" style="width: 200px;" :placeholder="$t('table.search')" class="filter-item" v-model="requestParameters.username">
-            </el-input>
-            <el-button class="filter-item" size="small" type="primary" icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
-            <el-button class="filter-item" size="small" type="primary" @click="resetForm">重置</el-button>
-          </el-form-item>
-            <el-button class="filter-item fr" size="small" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.addUser')}}</el-button>
+       <el-form :model="requestParameters" ref="requestParameters">
+          <div class="filter-container">
+            <el-form-item>
+              <el-input @keyup.enter="handleFilter" style="width: 200px;" :placeholder="$t('table.search')" class="filter-item" v-model="requestParameters.username">
+              </el-input>
+              <el-button class="filter-item" size="small" type="primary" icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
+              <el-button class="filter-item" size="small" type="primary" @click="resetForm">重置</el-button>
+            </el-form-item>
+              <el-button class="filter-item fr" size="small" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.addUser')}}</el-button>
+          </div>
+        </el-form>
+        <el-alert v-if="alertText !== ''" :title="alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
+        <!-- end -->
+        <!-- 数据 -->
+        <el-table :key='tableKey' :data="dataList" :row-class-name="rowClassStatus" v-loading="listLoading"  element-loading-text="给我一点时间" fit highlight-current-row
+        style="width: 100%" border>
+          <el-table-column align="center" :label="$t('table.id')">
+            <template slot-scope="scope">
+              <span>{{scope.row.id}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" :label="$t('table.email')">
+            <template slot-scope="scope">
+              <span>{{scope.row.email}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column :label="$t('table.phone')">
+            <template slot-scope="scope">
+              <span>{{scope.row.phone}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" :label="$t('table.username')">
+            <template slot-scope="scope">
+              <span>{{scope.row.username}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" :label="$t('table.permissionUser')">
+            <template slot-scope="scope">
+              <span>{{scope.row.permission_group_title}}</span>
+            </template>
+          </el-table-column>
+          <!-- 头像 -->
+          <!-- <el-table-column align="center" :label="$t('table.avatar')">
+            <template slot-scope="scope">
+              <img :src="scope.row.avatar" style="width:50px;height:50px;">
+            </template>
+          </el-table-column> -->
+          <el-table-column align="center" width="350px" :label="$t('table.introduction')">
+            <template slot-scope="scope">
+              <span>{{scope.row.introduction}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" :label="$t('table.actions')" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="handleUpdate(scope.row.id)">{{$t('table.edit')}}</el-button>
+              <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="removeUser(scope.row.id)">{{$t('table.delete')}}
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- end -->
+        <!-- 分页 -->
+        <div class="pagination">
+          <PageTool :paginationPage="requestParameters.page" :paginationPagesize="requestParameters.pagesize" :total="total" @pageChange="handleCurrentChange" @pageSizeChange="handleSizeChange">
+        </PageTool>
         </div>
-       </el-form>
-       <!-- end -->
-       <!-- 数据 -->
-       <el-table :key='tableKey' :data="dataList" :row-class-name="rowClassStatus" v-loading="listLoading"  element-loading-text="给我一点时间" fit highlight-current-row
-      style="width: 100%">
-        <el-table-column align="center" :label="$t('table.id')">
-          <template slot-scope="scope">
-            <span>{{scope.row.id}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="$t('table.email')">
-          <template slot-scope="scope">
-            <span>{{scope.row.email}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column :label="$t('table.phone')">
-          <template slot-scope="scope">
-            <span>{{scope.row.phone}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="$t('table.username')">
-          <template slot-scope="scope">
-            <span>{{scope.row.username}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="$t('table.permissionUser')">
-          <template slot-scope="scope">
-            <span>{{scope.row.permission_group_title}}</span>
-          </template>
-        </el-table-column>
-        <!-- 头像 -->
-        <!-- <el-table-column align="center" :label="$t('table.avatar')">
-          <template slot-scope="scope">
-            <img :src="scope.row.avatar" style="width:50px;height:50px;">
-          </template>
-        </el-table-column> -->
-        <el-table-column align="center" width="350px" :label="$t('table.introduction')">
-          <template slot-scope="scope">
-            <span>{{scope.row.introduction}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="$t('table.actions')" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleUpdate(scope.row.id)">{{$t('table.edit')}}</el-button>
-            <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="removeUser(scope.row.id)">{{$t('table.delete')}}
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <!-- end -->
-      <!-- 分页 -->
-      <div class="pagination-container">
-        <PageTool :paginationPage="requestParameters.page" :paginationPagesize="requestParameters.pagesize" :total="total" @pageChange="handleCurrentChange" @pageSizeChange="handleSizeChange">
-      </PageTool>
-      </div>
-      <!-- end -->
-      <!-- 新增标签弹层 -->
-      <component v-bind:is="UserAdd"
-          ref="editUser" 
-          :formData.sync='requestParameters'
-          :text='text'
-          :pageTitle='pageTitle'
-          :formBase='formData'
-          :ruleInline='ruleInline'
-          :PermissionGroupsList='PermissionGroupsList'
-          v-on:newDataes="handleLoadDataList" 
-          v-on:handleCloseModal="handleCloseModal">
-      </component>
+        <!-- end -->
+        <!-- 新增标签弹层 -->
+        <component v-bind:is="UserAdd"
+            ref="editUser" 
+            :formData.sync='requestParameters'
+            :text='text'
+            :pageTitle='pageTitle'
+            :formBase='formData'
+            :ruleInline='ruleInline'
+            :PermissionGroupsList='PermissionGroupsList'
+            v-on:newDataes="handleLoadDataList" 
+            v-on:handleCloseModal="handleCloseModal">
+        </component>
+      </el-card>
      </div>
   </div>
 </template>
+<style rel="stylesheet/scss" lang="scss" scoped>
+.alert {
+  margin: 10px 0px;
+}
+.pagination {
+  margin-top: 10px;
+  text-align: right;
+}
+</style>
+
 <style>
-.el-form-item--medium {
-  margin-bottom: 0 !important;
-}
-.el-form--label-left .el-form-item--medium {
-  margin-bottom: 22px !important;
-}
-.el-form-item--medium .el-form-item__content {
-  margin-left: 0 !important;
-}
-.el-form--label-left .el-form-item--medium .el-form-item__content {
-  margin-left: 120px !important;
-}
 .el-table th {
-  background: #f4f4f4 !important;
+  background-color: #fafafa;
 }
-.el-table th {
-  color: #606266;
-}
-.disabled .el-button--primary,
-.disabled td .el-button--danger {
-  pointer-events: none;
-  cursor: not-allowed;
-}
-.disabled td {
-  background-color: #f9f9f9;
-  color: #c1c1c1;
-}
-.disabled td .el-button--primary,
-.disabled td .el-button--danger {
-  background-color: #e7e7e7;
-  border: 0 none;
-  color: #bababa;
-  cursor: not-allowed;
+.el-table th.is-leaf {
+  border-bottom: 2px solid #e8e8e8;
 }
 </style>
 <script>
@@ -141,6 +126,7 @@ export default {
       total: null,
       listLoading: true,
       dialogStatus: '',
+      alertText: '',
       requestParameters: {
         page: 1,
         pagesize: 10,
@@ -185,6 +171,7 @@ export default {
         .then(data => {
           this.dataList = data.data.list
           this.total = data.data.counts
+          this.alertText = `共 ${this.total} 条记录`
           this.listLoading = false
         })
         .catch(e => {
@@ -259,7 +246,7 @@ export default {
     hanldeEditForm(objeditId) {
       this.formData.id = objeditId
       detail({ id: objeditId }).then((data, err) => {
-        var datalist = data.data.list[0]
+        var datalist = data.data
         if (err) {
           return err
         }

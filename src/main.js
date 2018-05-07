@@ -11,7 +11,8 @@ import './icons' // icon
 import './errorLog'// error log
 import * as filters from './filters' // global filters
 import './mock' // simulation data
-
+// font-awesome
+import 'font-awesome/css/font-awesome.css'
 /*
 * 注册 - 业务模块
 */
