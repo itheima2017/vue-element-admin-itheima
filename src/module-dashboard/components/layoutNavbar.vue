@@ -50,7 +50,7 @@
               {{$t('navbar.dashboard')}}
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <a target='_blank' href="https://github.com/itheima2017/vue-element-admin-itheima">
             <el-dropdown-item>
               {{$t('navbar.github')}}
             </el-dropdown-item>
