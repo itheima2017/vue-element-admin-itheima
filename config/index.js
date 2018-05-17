@@ -8,7 +8,7 @@ module.exports = {
   dev: {
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '',
     proxyTable: {
       '/api': {
         // target: 'https://www.easy-mock.com/mock/5ab213e33666166110a94928/admin',
