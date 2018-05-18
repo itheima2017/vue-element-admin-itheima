@@ -23,7 +23,7 @@
         </transition>
       </div>
       <!-- 使用文档 -->
-      <a href="http://research.itcast.cn/vue-element-admin-doc-itheima" class="item" target="_blank">
+      <a href="http://itheimaadmin.itcast.cn/book/help" class="item" target="_blank">
         <el-tooltip class="item" effect="dark" content="使用文档" placement="bottom"><i class="el-icon-question"></i></el-tooltip>
       </a>
       <!-- 错误 -->
