@@ -1,7 +1,7 @@
 {
-  "name": "vue-element-admin-itheima",
+  "name": "itheima-admin",
   "version": "1.0.0",
-  "description": "vue-element-admin 商用管理系统模板",
+  "description": "黑马Admin 管理系统基础模板",
   "author": "taoshiwei <taoshiwei@itcast.cn>",
   "private": true,
   "scripts": {
