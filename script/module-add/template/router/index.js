@@ -3,7 +3,7 @@
  * @Description: {{description}} 
  * @Date: 2018-04-13 16:13:27 
  * @Last Modified by: hans.taozhiwei
- * @Last Modified time: 2018-04-16 18:07:10
+ * @Last Modified time: 2018-05-22 17:04:36
  */
 
 import Layout from '@/module-dashboard/pages/layout'
@@ -16,7 +16,7 @@ export default [
     redirect: 'noredirect',
     name: '{{name}}',
     meta: {
-      title: '{{name}}',
+      title: '{{name}}管理',
       icon: 'component'
     },
     children: [
@@ -24,7 +24,7 @@ export default [
         path: 'table',
         component: _import('{{name}}/pages/index'),
         name: '{{name}}-table',
-        meta: {title: 'table'}
+        meta: {title: '列表模块'}
       }
     ]
   }
