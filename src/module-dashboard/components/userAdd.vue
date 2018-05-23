@@ -115,6 +115,7 @@ export default {
 .el-form--label-left .el-form-item__label {
   text-align: right;
 }
+.el-form-item--medium{margin-bottom: 22px;}
 .el-dialog__footer {
   text-align: right;
 }

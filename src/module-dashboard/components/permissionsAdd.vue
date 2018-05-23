@@ -12,7 +12,7 @@
               show-checkbox
               node-key="id"
               :default-expanded-keys="[0]"
-              :default-checked-keys="[0]"
+              :default-checked-keys="formBase.permissions"
               :props="defaultProps" @check-change='handleCheckChange'>
             </el-tree>
           </el-form-item>
@@ -31,7 +31,7 @@ import { list } from '@/api/base/menus.js'
 let _this = []
 export default {
   name: 'usersAdd',
-  props: ['text', 'pageTitle', 'ruleInline', 'formBase'],
+  props: ['text', 'pageTitle', 'ruleInline'],
   data() {
     return {
       dialogFormVisible: false,
@@ -40,7 +40,13 @@ export default {
         label: 'title'
       },
       permissions: [],
-      treeCheckedNodes: []
+      treeCheckedNodes: [],
+      formBase: {
+        id: 0,
+        create_date: '',
+        title: '',
+        permissions: []
+      }
     }
   },
   computed: {
@@ -53,10 +59,10 @@ export default {
           let per = _this.formBase.permissions.find(function(value, index) {
             return value === item.id
           })
-          checked = !!per
+          selected = !!per
         }
         // 标记勾选
-        if (!checked) {
+        if (selected) {
           let isPoint = item.childs === undefined && item.points === undefined
           let hasChilds = item.childs !== undefined && item.childs.length > 0
           let hasPoints = item.points !== undefined && item.points.length > 0
@@ -82,9 +88,9 @@ export default {
         for (let it of nodes) {
           let node = createNode(it)
           // 标记选中
-          console.log(node.checked)
+          // console.log(node.checked)
           if (node.checked) {
-            parentNode.checked = true
+            parentNode.selected = true
           }
           if (it.childs !== undefined && it.childs.length > 0) {
             parseNodes(it.childs, node)
@@ -94,7 +100,7 @@ export default {
           parentNode.children.push(node)
         }
       }
-      let nodes = createNode({ title: '系统菜单和页面权限点' })
+      let nodes = createNode({ title: '系统菜单和页面权限点', expand: true })
       parseNodes(this.PermissionGroupsmenu, nodes)
       return [nodes]
     }
@@ -112,26 +118,29 @@ export default {
     handleClose() {
       this.$emit('handleCloseModal')
     },
-    // renderContent(h, { node, data, store }) {
-    //   let icon
-    //   let platForm
-    //   let isShow = false
-    //   if (platForm === 0) {
-    //     icon = <span icon-style="icon-style" icon-class="el-icon-pc" />
-    //     isShow = true
-    //   } else {
-    //     icon = <span icon-style="icon-style" icon-class="el-icon-wx" />
-    //     isShow = false
-    //   }
-    //   return (
-    //     <span style="font-size: 14px; padding-right: 8px">
-    //       <span class="normalText">
-    //         {icon}
-    //         <span style="color: #333;"> {node.label} </span>
-    //       </span>
-    //     </span>
-    //   )
-    // },
+    // 表单重置
+    handleResetForm() {
+      this.formBase = {
+        id: 0,
+        title: '',
+        permissions: []
+      }
+    },
+    // 编辑详情数据加载
+    hanldeEditForm(objeditId) {
+      this.formBase.id = objeditId
+      var data = {
+        id: objeditId
+      }
+      detail(data).then((ret, err) => {
+        if (err) {
+          return err
+        }
+        this.formBase.id = ret.data.id
+        this.formBase.title = ret.data.title
+        this.formBase.permissions = ret.data.permissions
+      })
+    },
     setupData() {
       list().then(data => {
         this.PermissionGroupsmenu = data.data

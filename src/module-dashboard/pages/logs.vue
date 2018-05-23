@@ -1,41 +1,41 @@
 <template>
-  <div class="dashboard-container">
+  <div class="dashboard-container" v-loading="loading">
     <div class="app-container">
       <el-card shadow="never">
         <el-alert v-if="alertText !== ''" :title="alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
         <!-- 数据 -->
-        <el-table :key='tableKey' :data="dataList" v-loading="listLoading"  element-loading-text="给我一点时间" fit highlight-current-row
+        <el-table :key='tableKey' :data="dataList"  fit highlight-current-row
         style="width: 100%" border>
           <el-table-column align="center" :label="$t('table.operationType')">
             <template slot-scope="scope">
-              <span>{{scope.row.operation_type}}</span>
+              <span>{{scope.row.type}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" :label="$t('table.operator')">
             <template slot-scope="scope">
-              <span>{{scope.row.user_name}}</span>
+              <span>{{scope.row.author}}</span>
             </template>
           </el-table-column>
           <el-table-column :label="$t('table.results')">
             <template slot-scope="scope">
-              <span>{{scope.row.operation_result}}</span>
+              <span>{{scope.row.title}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" :label="$t('table.operationDate')">
             <template slot-scope="scope">
-              <span>{{scope.row.operation_date}}</span>
+              <span>{{scope.row.display_time}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" :label="$t('table.describe')">
             <template slot-scope="scope">
-              <span>{{scope.row.operation_desc}}</span>
+              <span>{{scope.row.forecast}}</span>
             </template>
           </el-table-column>
         </el-table>
         <!-- end -->
         <!-- 分页 -->
         <div class="pagination-container">
-          <PageTool :paginationPage="requestParameters.page" :paginationPagesize="requestParameters.pagesize" :total="total" @pageChange="handleCurrentChange" @pageSizeChange="handleSizeChange">
+          <PageTool :paginationPage="pagination.page" :paginationPagesize="pagination.pageSize" :total="pagination.total" @pageChange="handleCurrentChange" @pageSizeChange="handleSizeChange">
         </PageTool>
         </div>
         <!-- end -->
@@ -62,8 +62,9 @@
 }
 </style>
 <script>
-import { list } from '@/api/base/logs'
+// import { list } from '@/api/base/logs'
 import PageTool from './../components/pageTool'
+import {list} from '@/api/example/table'
 export default {
   name: 'base-logs',
   components: {
@@ -77,26 +78,47 @@ export default {
       listLoading: true,
       dialogStatus: '',
       alertText: '',
-      requestParameters: {
-        page: 1,
-        pagesize: 10
+      pagination: {
+        // page: 1,
+        // pagesize: 10
+        total: 0,
+        pageSize: 20,
+        pageSizes: [20, 50, 80, 120],
+        currentPage: 1
       }
     }
   },
   computed: {},
   methods: {
     // 获取列表数据
-    getList(params) {
+    getList(page = 1, limit = 20) {
       this.listLoading = true
-      list(this.requestParameters)
-        .then(data => {
-          this.dataList = data.data.list
-          this.total = data.data.counts
-          this.alertText = `共 ${this.total} 条记录`
-          this.listLoading = false
+      // list(this.requestParameters)
+      //   .then(data => {
+      //     this.dataList = data.data.list
+      //     this.total = data.data.counts
+      //     this.alertText = `共 ${this.total} 条记录`
+      //     this.listLoading = false
+      //   })
+      //   .catch(e => {
+      //     this.$message.e('错了哦，这是一条错误消息')
+      //   })
+      this.pagination.currentPage = page
+      this.pagination.pageSize = limit
+      this.loading = true
+      this.alertText = ''
+      this.dataList = []
+      list({page, limit})
+        .then(res => {
+          console.log(res.data)
+          this.dataList = res.data.items
+          this.pagination.total = res.data.total
+          this.alertText = `共 ${this.pagination.total} 条记录`
+          this.loading = false
         })
-        .catch(e => {
-          this.$message.e('错了哦，这是一条错误消息')
+        .catch(err => {
+          console.log(err)
+          this.loading = false
         })
     },
     // 每页显示信息条数

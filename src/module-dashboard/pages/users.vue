@@ -92,7 +92,7 @@
 }
 .pagination {
   margin-top: 10px;
-  text-align: right;
+  // text-align: right;
 }
 </style>
 
@@ -103,6 +103,7 @@
 .el-table th.is-leaf {
   border-bottom: 2px solid #e8e8e8;
 }
+.el-form-item{margin-bottom: 0;}
 </style>
 <script>
 import { simple } from '@/api/base/permissions'

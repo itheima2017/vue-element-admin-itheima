@@ -56,7 +56,7 @@
           :formData.sync='requestParameters'
           :text='text'
           :pageTitle='pageTitle'
-          :formBase='formData'
+
           :ruleInline='ruleInline'
           v-on:newDataes="handleLoadDataList" 
           v-on:handleCloseModal="handleCloseModal">
@@ -79,7 +79,7 @@
 }
 .pagination {
   margin-top: 10px;
-  text-align: right;
+  // text-align: right;
 }
 </style>
 
@@ -126,12 +126,12 @@ export default {
       //   title: '',
       //   permissions: []
       // },
-      formData: {
-        id: 0,
-        create_date: '',
-        title: '',
-        permissions: []
-      },
+      // formData: {
+      //   id: 0,
+      //   create_date: '',
+      //   title: '',
+      //   permissions: []
+      // },
       ruleInline: {
         // 表单验证
         title: [{ required: true, message: '用户名不能为空', trigger: 'blur' }]
@@ -190,17 +190,10 @@ export default {
       this.getList()
     },
     // **********************************
-    // 搜索的项目
-    query() {
-      this.formData = {
-        title: '',
-        permissions: []
-      }
-    },
     // 新增用户
     handleCreate() {
-      this.query()
       this.text = '创建'
+      this.$refs.editPermission.handleResetForm()
       this.$refs.editPermission.dialogFormV()
     },
     // 窗口操作**********************************
@@ -208,29 +201,12 @@ export default {
     handleCloseModal() {
       this.$refs.editPermission.dialogFormH()
     },
-    // 编辑详情数据加载
-    hanldeEditForm(objeditId) {
-      this.formData.id = objeditId
-      var data = {
-        id: objeditId
-      }
-      detail(data).then((ret, err) => {
-        if (err) {
-          return err
-        }
-        this.formData.id = ret.data.id
-        this.formData.title = ret.data.title
-        this.formData.permissions = ret.data.permissions
-        // console.log(this.formData.permissions)
-      })
-    },
     // 编辑
     handleUpdate(objeditId) {
-      this.query()
       var _this = this
       this.text = '编辑'
       this.$refs.editPermission.dialogFormV()
-      _this.hanldeEditForm(objeditId)
+      this.$refs.editPermission.hanldeEditForm(objeditId)
     },
     // 删除
     removeUser(user) {
@@ -255,7 +231,6 @@ export default {
     // 高级接口权限
 
     handleApiSet(objeditId) {
-      this.query()
       this.$refs.editPermissionApi.dialogFormV()
     }
   },

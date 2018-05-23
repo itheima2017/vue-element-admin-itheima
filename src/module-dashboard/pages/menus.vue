@@ -218,7 +218,7 @@ export default {
 }
 .pagination {
   margin-top: 10px;
-  text-align: right;
+  // text-align: right;
 }
 </style>
 
