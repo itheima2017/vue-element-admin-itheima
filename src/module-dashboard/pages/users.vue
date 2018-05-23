@@ -56,9 +56,14 @@
             </template>
           </el-table-column>
           <el-table-column align="center" :label="$t('table.actions')" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
+            <template slot-scope="scope" v-show="deletedDate">
               <el-button type="primary" size="mini" @click="handleUpdate(scope.row.id)">{{$t('table.edit')}}</el-button>
               <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="removeUser(scope.row.id)">{{$t('table.delete')}}
+              </el-button>
+            </template>
+            <template slot-scope="scope" v-show="showDate">
+              <el-button type="primary" size="mini">{{$t('table.edit')}}</el-button>
+              <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger">{{$t('table.delete')}}
               </el-button>
             </template>
           </el-table-column>
@@ -103,7 +108,20 @@
 .el-table th.is-leaf {
   border-bottom: 2px solid #e8e8e8;
 }
-.el-form-item{margin-bottom: 0;}
+.el-form-item {
+  margin-bottom: 0;
+}
+.disabled td {
+  background-color: #f9f9f9;
+  color: #c1c1c1;
+}
+.disabled .el-button--primary,
+.disabled .el-button--danger {
+  background-color: #dbdada;
+  border: 1px solid #dbdada;
+  color: #999;
+   cursor:not-allowed;
+}
 </style>
 <script>
 import { simple } from '@/api/base/permissions'
@@ -122,6 +140,8 @@ export default {
       pageTitle: '用户', // 页面标题
       text: '', // 新增、编辑文本
       tableKey: 0,
+      deletedDate: false,
+      showDate: true,
       dataList: [],
       PermissionGroupsList: [], // 权限组加载
       total: null,
@@ -213,6 +233,8 @@ export default {
     // 数据删除后显示样式
     rowClassStatus(row) {
       if (row.row.is_deleted === 1) {
+        this.deletedDate = true
+        this.showDate = false
         return 'disabled'
       } else {
         return ''
