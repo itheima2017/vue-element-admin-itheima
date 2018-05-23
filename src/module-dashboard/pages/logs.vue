@@ -79,7 +79,7 @@ export default {
       dialogStatus: '',
       alertText: '',
       pagination: {
-        // page: 1,
+        page: 1,
         // pagesize: 10
         total: 0,
         pageSize: 20,
@@ -110,27 +110,27 @@ export default {
       this.dataList = []
       list({page, limit})
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           this.dataList = res.data.items
           this.pagination.total = res.data.total
           this.alertText = `共 ${this.pagination.total} 条记录`
           this.loading = false
         })
-        .catch(err => {
-          console.log(err)
+        .catch(e => {
+          this.$message.e('错了哦，这是一条错误消息')
           this.loading = false
         })
     },
     // 每页显示信息条数
     handleSizeChange(val) {
-      this.requestParameters.pagesize = val
-      if (this.requestParameters.page === 1) {
-        this.getList(this.requestParameters)
+      this.pagination.pagesize = val
+      if (this.pagination.page === 1) {
+        this.getList(this.pagination)
       }
     },
     // 进入某一页
     handleCurrentChange(val) {
-      this.requestParameters.page = val
+      this.pagination.page = val
       this.getList()
     }
   },
