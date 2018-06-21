@@ -13,7 +13,7 @@
               node-key="id"
               :default-expanded-keys="[0]"
               :default-checked-keys="formBase.permissions"
-              :props="defaultProps" @check-change='handleCheckChange'>
+              :props="defaultProps" @check='handleCheckChange'>
             </el-tree>
           </el-form-item>
         </el-form>
@@ -148,9 +148,8 @@ export default {
     },
 
     // 节点复选框被选中
-    handleCheckChange(nodes) {
-      var treeCheckedNodes = []
-      treeCheckedNodes.push(nodes)
+    handleCheckChange(data, checked, indeterminate) {
+      this.treeCheckedNodes = checked.checkedNodes
     },
     // 表单提交
     handleAdd(object) {
@@ -176,7 +175,7 @@ export default {
           if (isFind) {
             for (let item of nodesPath) {
               if (curPermissions.indexOf(item.id) === -1) {
-                curPermissions.push(item.id)
+                curPermissions.push(findId)
               }
             }
             nodesPath = []
@@ -192,6 +191,7 @@ export default {
       }
       for (let it of this.treeCheckedNodes) {
         // console.log(` > id:${it.id} , title:${it.title}`)
+        it.checked = true
         nodesPath = []
         parseNodes(this.PermissionGroupsmenu, it.id)
       }
