@@ -28,7 +28,10 @@ export default [
         path: 'permissions',
         name: 'base-permissions',
         component: _import('dashboard/pages/permissions'),
-        meta: {title: 'permissions'}
+        meta: {
+          title: 'permissions',
+          noCache: true
+        }
       },
       {
         path: 'logs',

@@ -17,19 +17,28 @@
         <el-alert v-if="alertText !== ''" :title="alertText" type="info" class="alert" :closable='false' show-icon></el-alert>
         <!-- end -->
         <!-- 数据 -->
-        <el-table :key='tableKey' :data="dataList" :row-class-name="rowClassStatus" v-loading="listLoading"  element-loading-text="给我一点时间" fit highlight-current-row
-        style="width: 100%" border>
-          <el-table-column align="center" :label="$t('table.id')">
+        <el-table 
+          :key='tableKey' 
+          :data="dataList" 
+          :row-class-name="rowClassStatus" 
+          v-loading="listLoading" 
+          element-loading-text="给我一点时间" 
+          fit 
+          highlight-current-row
+          style="width: 100%" 
+          border
+          >
+          <el-table-column align="center" :label="$t('table.id')" width="50px">
             <template slot-scope="scope">
               <span>{{scope.row.id}}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" :label="$t('table.email')">
+          <el-table-column align="center" :label="$t('table.email')" width="180px">
             <template slot-scope="scope">
               <span>{{scope.row.email}}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('table.phone')">
+          <el-table-column :label="$t('table.phone')" width="120px">
             <template slot-scope="scope">
               <span>{{scope.row.phone}}</span>
             </template>
@@ -50,21 +59,15 @@
               <img :src="scope.row.avatar" style="width:50px;height:50px;">
             </template>
           </el-table-column> -->
-          <el-table-column align="center" width="350px" :label="$t('table.introduction')">
+          <el-table-column align="center" width="250px" :label="$t('table.introduction')">
             <template slot-scope="scope">
               <span>{{scope.row.introduction}}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" :label="$t('table.actions')" class-name="small-padding fixed-width">
-            <template slot-scope="scope" v-show="deletedDate">
-              <el-button type="primary" size="mini" @click="handleUpdate(scope.row.id)">{{$t('table.edit')}}</el-button>
-              <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="removeUser(scope.row.id)">{{$t('table.delete')}}
-              </el-button>
-            </template>
-            <template slot-scope="scope" v-show="showDate">
-              <el-button type="primary" size="mini">{{$t('table.edit')}}</el-button>
-              <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger">{{$t('table.delete')}}
-              </el-button>
+          <el-table-column align="center" :label="$t('table.actions')" width="150px" class-name="small-padding fixed-width">
+            <template slot-scope="scope">
+              <el-button :disabled="scope.row.is_deleted===1" type="primary" size="mini" @click="handleUpdate(scope.row.id)">{{$t('table.edit')}}</el-button>
+              <el-button :disabled="scope.row.is_deleted===1" size="mini" type="danger" @click="removeUser(scope.row.id)">{{$t('table.delete')}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -169,9 +172,9 @@ export default {
           { required: true, message: '用户名不能为空', trigger: 'blur' }
         ],
         email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
-        ],
+        // password: [
+        //   { required: true, message: '密码不能为空', trigger: 'blur' }
+        // ],
         permission_group_id: [
           {
             type: 'number',
@@ -277,7 +280,7 @@ export default {
         this.formData.email = datalist.email
         this.formData.phone = datalist.phone
         this.formData.username = datalist.username
-        this.formData.password = datalist.password
+        this.formData.password = ''
         this.formData.avatar = datalist.avatar
         this.formData.introduction = datalist.introduction
         this.formData.permission_group_id = datalist.permission_group_id

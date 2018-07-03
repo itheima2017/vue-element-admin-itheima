@@ -8,9 +8,6 @@
           <el-form-item :label="$t('table.paddword')" prop="password" v-if="formBase.password!=undefined">
             <el-input v-model="formBase.password"></el-input>
           </el-form-item>
-          <el-form-item :label="$t('table.phone')" prop="phone">
-            <el-input v-model="formBase.phone"></el-input>
-          </el-form-item>
           <el-form-item :label="$t('table.email')" prop="email">
             <el-input v-model="formBase.email"></el-input>
           </el-form-item>
@@ -19,6 +16,9 @@
               <el-option v-for="item in PermissionGroupsList" :value="item.id" :key="item.key" :label="item.title">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('table.phone')" prop="phone">
+            <el-input v-model="formBase.phone"></el-input>
           </el-form-item>
           <!-- 头像上传下一个版本再做 -->
           <!-- <el-form-item :label="$t('table.avatar')" prop="avatar">
@@ -48,6 +48,8 @@
 
 <script>
 import { detail, update, add } from '@/api/base/users'
+import shajs from 'sha.js'
+
 export default {
   name: 'usersAdd',
   props: [
@@ -84,6 +86,7 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           this.$emit('handleCloseModal')
+          // this.formBase.password = shajs('sha256').update(this.formBase.password).digest('hex')
           let data = {
             ...this.formBase
           }
