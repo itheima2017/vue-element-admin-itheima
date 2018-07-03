@@ -2,36 +2,38 @@
   <div class="add-form">
     <el-dialog :title="text+pageTitle" :visible.sync="dialogFormVisible">
     <el-form :rules="ruleInline" ref="formMenu" :model="formMenu" label-position="left" label-width="120px" style='width: 400px; margin-left:120px;'>
-          <el-form-item :label="$t('table.permissionUser')">
+          <el-form-item label="类型">
               <el-radio-group v-model="type" class="choose-type" @change="handleChooseType">
                 <el-radio label="menu" class="choose-item" :disabled="typeStatus">菜单</el-radio>
                 <el-radio label="points" class="choose-item" :disabled="typeStatus">权限点</el-radio>
               </el-radio-group>
           </el-form-item>
-          <el-form-item :label="$t('table.permissionUser')">
-              <el-select v-model="formMenu.pid">
-                <el-option :value="0" :label="$t('table.powerNav')">主导航</el-option>
-                <el-option v-for="(items) in notPointDataList" :value="items.id" :key="items.id" :disabled="(type === 'points') && !!(items.childs)" :class="'moveIn'+items.layer">
-                  <!-- <span class="ms-tree-space" v-for="item in leafCount" :key="item.id">&nbsp;</span> -->
-                  <span>
-                    {{ items.title }}</span>
-                </el-option>
-              </el-select>
-
-            </el-form-item>
+          <el-form-item label="父级">
+            <el-select v-model="formMenu.pid">
+              <el-option :value=0 label="主导航">主导航</el-option>
+              <el-option v-for="(item) in notPointDataList" 
+                :value="item.id" 
+                :label="item.title" 
+                :key="item.id" 
+                :disabled="(type === 'points') && !!(item.childs)" 
+                :class="'moveIn'+item.layer">
+                {{ item.title }}
+              </el-option>
+            </el-select>
+          </el-form-item>
           <div v-if="showMenuBlock">
-            <el-form-item :label="$t('table.powerCode')" prop="code">
+            <el-form-item label="代码" prop="code">
               <el-input v-model="formMenu.code"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('table.powerTitle')" prop="title">
+            <el-form-item label="名称" prop="title">
               <el-input v-model="formMenu.title"></el-input>
             </el-form-item>
           </div>
           <div v-if="showPointBlock" :model="formPoints">
-            <el-form-item :label="$t('table.powerCode')" prop="code">
+            <el-form-item label="代码" prop="code">
               <el-input v-model="formPoints.code"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('table.powerTitle')" prop="title">
+            <el-form-item label="名称" prop="title">
               <el-input v-model="formPoints.title"></el-input>
             </el-form-item>
           </div>
