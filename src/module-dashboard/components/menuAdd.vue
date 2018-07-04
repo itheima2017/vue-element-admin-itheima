@@ -1,53 +1,48 @@
 <template>
   <div class="add-form">
     <el-dialog :title="text+pageTitle" :visible.sync="dialogFormVisible">
-    <el-form :rules="ruleInline" ref="formMenu" :model="formMenu" label-position="left" label-width="120px" style='width: 400px; margin-left:120px;'>
-          <el-form-item label="类型">
-              <el-radio-group v-model="type" class="choose-type" @change="handleChooseType">
-                <el-radio label="menu" class="choose-item" :disabled="typeStatus">菜单</el-radio>
-                <el-radio label="points" class="choose-item" :disabled="typeStatus">权限点</el-radio>
-              </el-radio-group>
+      <el-form :rules="ruleInline" ref="formMenu" :model="formMenu" label-position="left" label-width="120px" style='width: 400px; margin-left:120px;'>
+        <el-form-item label="类型">
+          <el-radio-group v-model="type" class="choose-type" @change="handleChooseType">
+            <el-radio label="menu" class="choose-item" :disabled="typeStatus">菜单</el-radio>
+            <el-radio label="points" class="choose-item" :disabled="typeStatus">权限点</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="父级">
+          <el-select v-model="formMenu.pid">
+            <el-option :value=0 label="主导航">主导航</el-option>
+            <el-option v-for="(item) in notPointDataList" :value="item.id" :label="item.title" :key="item.id" :disabled="(type === 'points') && !!(item.childs)" :class="'moveIn'+item.layer">
+              {{ item.title }}
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <div v-if="showMenuBlock">
+          <el-form-item label="代码" prop="code">
+            <el-input v-model="formMenu.code"></el-input>
           </el-form-item>
-          <el-form-item label="父级">
-            <el-select v-model="formMenu.pid">
-              <el-option :value=0 label="主导航">主导航</el-option>
-              <el-option v-for="(item) in notPointDataList" 
-                :value="item.id" 
-                :label="item.title" 
-                :key="item.id" 
-                :disabled="(type === 'points') && !!(item.childs)" 
-                :class="'moveIn'+item.layer">
-                {{ item.title }}
-              </el-option>
-            </el-select>
+          <el-form-item label="名称" prop="title">
+            <el-input v-model="formMenu.title"></el-input>
           </el-form-item>
-          <div v-if="showMenuBlock">
-            <el-form-item label="代码" prop="code">
-              <el-input v-model="formMenu.code"></el-input>
-            </el-form-item>
-            <el-form-item label="名称" prop="title">
-              <el-input v-model="formMenu.title"></el-input>
-            </el-form-item>
-          </div>
-          <div v-if="showPointBlock" :model="formPoints">
-            <el-form-item label="代码" prop="code">
-              <el-input v-model="formPoints.code"></el-input>
-            </el-form-item>
-            <el-form-item label="名称" prop="title">
-              <el-input v-model="formPoints.title"></el-input>
-            </el-form-item>
-          </div>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="handleClose">{{$t('table.cancel')}}</el-button>
-          <el-button type="primary" @click="handleSubmit('formMenu')">{{$t('table.confirm')}}</el-button>
         </div>
-  </el-dialog>
-  
+        <div v-if="showPointBlock" :model="formPoints">
+          <el-form-item label="代码" prop="code">
+            <el-input v-model="formPoints.code"></el-input>
+          </el-form-item>
+          <el-form-item label="名称" prop="title">
+            <el-input v-model="formPoints.title"></el-input>
+          </el-form-item>
+        </div>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handleClose">{{$t('table.cancel')}}</el-button>
+        <el-button type="primary" @click="handleSubmit('formMenu')">{{$t('table.confirm')}}</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 <script>
-import { list, detail, update, add } from '@/api/base/menus'
+import {list, detail, update, add} from '@/api/base/menus'
 import Utils from '@/components/TreeTable/utils/dataTranslate.js'
 let _this = []
 export default {
@@ -129,8 +124,8 @@ export default {
       },
       codepast: '',
       ruleInline: {
-        title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
-        code: [{ required: true, validator: validateCode, trigger: 'blur' }]
+        title: [{required: true, message: '标题不能为空', trigger: 'blur'}],
+        code: [{required: true, validator: validateCode, trigger: 'blur'}]
       },
       leafCount: []
     }
@@ -256,10 +251,7 @@ export default {
     // 表单详情
     dataRest(obj) {
       for (var i = 0; i < obj.length; i++) {
-        if (
-          obj[i].childs &&
-          obj[i].childs.length > 0
-        ) {
+        if (obj[i].childs && obj[i].childs.length > 0) {
           for (var j = 0; j < obj[i].childs.length; j++) {
             this.$set(obj[i].childs[j], 'layer', 1)
           }
@@ -276,7 +268,7 @@ export default {
         this.dataRest(data.data)
         this.changeAray()
       })
-      detail({ id: objeditId }).then(data => {
+      detail({id: objeditId}).then(data => {
         // console.log(data.data)
         this.formMenu.id = data.data.id
         this.formMenu.pid = data.data.pid
@@ -319,19 +311,21 @@ export default {
   updated: function() {}
 }
 </script>
-<style>
-.el-form--label-left .el-form-item__label {
-  text-align: right;
-}
-.el-dialog__footer {
-  text-align: right;
-}
-.moveIn0 {
-  text-indent: 14px;
-}
+<style rel="stylesheet/scss" lang="scss">
+.add-form {
+  .el-form--label-left .el-form-item__label {
+    text-align: right;
+  }
+  .el-dialog__footer {
+    text-align: right;
+  }
+  .moveIn0 {
+    text-indent: 14px;
+  }
 
-.moveIn1 {
-  text-indent: 28px;
+  .moveIn1 {
+    text-indent: 28px;
+  }
 }
 </style>
 <style scoped lang="scss">

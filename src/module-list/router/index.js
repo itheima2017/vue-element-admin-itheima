@@ -3,7 +3,7 @@
  * @Description: 列表页 
  * @Date: 2018-04-13 16:13:27 
  * @Last Modified by: hans.taozhiwei
- * @Last Modified time: 2018-04-17 09:48:44
+ * @Last Modified time: 2018-07-04 13:27:02
  */
 
 import Layout from '@/module-dashboard/pages/layout'
@@ -21,21 +21,21 @@ export default [
     },
     children: [
       {
-        path: 'table-list',
+        path: 'table',
         component: _import('list/pages/tableList'),
-        name: 'table-list',
+        name: 'list-table',
         meta: {title: 'tableList'}
       },
       {
-        path: 'basic-list',
+        path: 'basic',
         component: _import('list/pages/basicList'),
-        name: 'basic-list',
+        name: 'list-basic',
         meta: {title: 'basicList'}
       },
       {
-        path: 'card-list',
+        path: 'card',
         component: _import('list/pages/cardList'),
-        name: 'card-list',
+        name: 'list-card',
         meta: {title: 'cardList'}
       }
     ]

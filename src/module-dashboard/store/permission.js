@@ -33,10 +33,12 @@ const permission = {
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        // const { roles } = data
-        // let accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        // commit('SET_ROUTERS', accessedRouters)
-        commit('SET_ROUTERS', asyncRouterMap)
+        // 返回筛选路由
+        const { roles } = data
+        let accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        commit('SET_ROUTERS', accessedRouters)
+        // 返回所有路由，测试
+        // commit('SET_ROUTERS', asyncRouterMap)
         resolve()
       })
     }
