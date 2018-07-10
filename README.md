@@ -3,7 +3,7 @@
 [![GitHub release](https://img.shields.io/github/release/itheima2017/vue-element-admin-itheima.svg?style=flat-square ':no-zoom')](https://github.com/itheima2017/vue-element-admin-itheima/releases)
 [![GitHub stars](https://img.shields.io/github/stars/itheima2017/vue-element-admin-itheima.svg?style=flat-square&label=Stars ':no-zoom')](https://github.com/itheima2017/vue-element-admin-itheima)
 
-## 说明
+# 说明
 
 `黑马Admin` 的前端项目, [安装及快速开始 go!](http://itheimaadmin.itcast.cn/book/help/#/getting-started)
 
@@ -15,7 +15,7 @@
   * [API 接口文档](http://itheimaadmin.itcast.cn/book/api/_book/)
   * [使用帮助文档](http://itheimaadmin.itcast.cn/book/help/)
 
-### 版权
+# 版权
 
 [MIT](https://github.com/itheima2017/vue-element-admin-itheima/blob/master/LICENSE) license.
 
