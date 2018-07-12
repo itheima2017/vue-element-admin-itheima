@@ -17,7 +17,8 @@ export default {
     form: '表单页',
     basicForm: '基础表单',
     stepForm: '分步表单',
-    advancedList: '高级表单'
+    advancedList: '高级表单',
+    step: '步骤'
   },
   navbar: {
     search: '站内搜索',

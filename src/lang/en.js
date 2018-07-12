@@ -17,7 +17,8 @@ export default {
     form: 'form',
     basicForm: 'basic form',
     stepForm: 'step form',
-    advancedList: 'advanced form'
+    advancedList: 'advanced form',
+    step: 'step'
   },
   navbar: {
     search: 'search',

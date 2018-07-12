@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import SidebarItem from './layoutSidebarItem'
 import ScrollBar from '@/components/ScrollBar'
 
 export default {
   name: 'layoutSidebar',
-  components: {SidebarItem, ScrollBar},
+  components: { SidebarItem, ScrollBar },
   computed: {
     ...mapGetters(['permission_routers', 'sidebar']),
     isCollapse() {
