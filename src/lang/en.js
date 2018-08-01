@@ -18,7 +18,11 @@ export default {
     basicForm: 'basic form',
     stepForm: 'step form',
     advancedList: 'advanced form',
-    step: 'step'
+    step: 'step',
+
+    details: 'details',
+    BasicsDetails: 'Basic details page',
+    seniorDetails: 'Advanced details page'
   },
   navbar: {
     search: 'search',

@@ -207,3 +207,45 @@ code {
 .el-table th.is-leaf {
   border-bottom: 2px solid #e8e8e8;
 }
+.icon{display: inline-block;width: 6px; height: 6px;border-radius: 3px;position: relative;}
+.iconBlue{background: #1890ff;}
+.iconBlue:after{
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #1890ff;
+    content: "";
+    animation: antStatusProcessing 1.2s infinite ease-in-out
+}
+.iconRed{background: #f5222d;}
+.iconGreen{background: green;}
+@-webkit-keyframes antStatusProcessing {
+    0% {
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+        opacity: .9
+    }
+
+    to {
+        -webkit-transform: scale(2.4);
+        transform: scale(2.4);
+        opacity: 0
+    }
+}
+
+@keyframes antStatusProcessing {
+    0% {
+        -webkit-transform: scale(.8);
+        transform: scale(.8);
+        opacity: .9
+    }
+
+    to {
+        -webkit-transform: scale(2.4);
+        transform: scale(2.4);
+        opacity: 0
+    }
+}

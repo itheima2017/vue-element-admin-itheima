@@ -11,32 +11,26 @@ const _import = require('@/router/import_' + process.env.NODE_ENV)
 
 export default [
   {
-    path: '/list',
+    path: '/details',
     component: Layout,
     redirect: 'noredirect',
-    name: 'list',
+    name: 'details',
     meta: {
-      title: 'list',
-      icon: 'table'
+      title: 'details',
+      icon: 'tab'
     },
     children: [
       {
-        path: 'table-list',
-        component: _import('list/pages/tableList'),
-        name: 'table-list',
-        meta: {title: 'tableList'}
+        path: 'basics-details',
+        component: _import('details/pages/basicsDetails'),
+        name: 'basics-details',
+        meta: {title: 'BasicsDetails'}
       },
       {
-        path: 'basic-list',
-        component: _import('list/pages/basicList'),
-        name: 'basic-list',
-        meta: {title: 'basicList'}
-      },
-      {
-        path: 'card-list',
-        component: _import('list/pages/cardList'),
-        name: 'card-list',
-        meta: {title: 'cardList'}
+        path: 'senior-details',
+        component: _import('details/pages/seniorDetails'),
+        name: 'senior-details',
+        meta: {title: 'seniorDetails'}
       }
     ]
   }

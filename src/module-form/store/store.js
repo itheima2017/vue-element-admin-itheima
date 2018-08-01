@@ -6,7 +6,7 @@ Vue.use(Vuex)
 /* 测试数据 */
 const date = 'Mon Oct 17 2016 00:00:00 GMT+0800 (中国标准时间)'
 const ruleForm = {
-  name: '',
+  name: '活动名称',
   fenLeis: [{
       name: '测试1'
     },

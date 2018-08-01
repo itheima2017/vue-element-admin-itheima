@@ -33,7 +33,40 @@ export default [
         name: 'step-form',
         meta: {
           title: 'stepForm'
-        }
+        },
+        children: [
+          {
+          path: '/',
+          component: _import('form/pages/activePublic/step1'),
+          name: 'step0',
+          meta: {
+            title: 'step'
+          }
+        },
+        {
+          path: 'step1',
+          component: _import('form/pages/activePublic/step1'),
+          name: 'step1',
+          meta: {
+            title: 'step'
+          }
+        },
+        {
+          path: 'step2',
+          component: _import('form/pages/activePublic/step2'),
+          name: 'step2',
+          meta: {
+            title: 'step'
+          }
+        },
+        {
+          path: 'step3',
+          component: _import('form/pages/activePublic/step3'),
+          name: 'step3',
+          meta: {
+            title: 'step'
+          }
+        }]
       },
       {
         path: 'senior-form',
@@ -42,46 +75,84 @@ export default [
         meta: {
           title: 'advancedList'
         }
-      },
-      {
-        path: '/activePublic',
-        component: activePublic,
-        children: [  
-          {
-            path: '/',
-            component: _import('form/pages/activePublic/step1'),
-            name: 'step0',
-            meta: {
-              title: 'step'
-            }
-          },
-          {
-            path: 'step1',
-            component: _import('form/pages/activePublic/step1'),
-            name: 'step1',
-            meta: {
-              title: 'step'
-            }
-          },
-          {
-            path: 'step2',
-            component: _import('form/pages/activePublic/step2'),
-            name: 'step2',
-            meta: {
-              title: 'step'
-            }
-          },
-          {
-            path: 'step3',
-            component: _import('form/pages/activePublic/step3'),
-            name: 'step3',
-            meta: {
-              title: 'step'
-            }
-          }
-        ]
       }
+      // {
+      //   path: '/activePublic',
+      //   component: activePublic,
+      //   children: [  
+      //     {
+      //       path: '/',
+      //       component: _import('form/pages/activePublic/step1'),
+      //       name: 'step0',
+      //       meta: {
+      //         title: 'step'
+      //       }
+      //     },
+      //     {
+      //       path: 'step1',
+      //       component: _import('form/pages/activePublic/step1'),
+      //       name: 'step1',
+      //       meta: {
+      //         title: 'step'
+      //       }
+      //     },
+      //     {
+      //       path: 'step2',
+      //       component: _import('form/pages/activePublic/step2'),
+      //       name: 'step2',
+      //       meta: {
+      //         title: 'step'
+      //       }
+      //     },
+      //     {
+      //       path: 'step3',
+      //       component: _import('form/pages/activePublic/step3'),
+      //       name: 'step3',
+      //       meta: {
+      //         title: 'step'
+      //       }
+      //     }
+      //   ]
+      // }
     ]
+    
   }
-
+  // {
+  //   path: '/',
+  //   component: activePublic,
+  //   children: [  
+  //     {
+  //       path: '/',
+  //       component: _import('form/pages/activePublic/step1'),
+  //       name: 'step0',
+  //       meta: {
+  //         title: 'step'
+  //       }
+  //     },
+  //     {
+  //       path: 'step1',
+  //       component: _import('form/pages/activePublic/step1'),
+  //       name: 'step1',
+  //       meta: {
+  //         title: 'step'
+  //       }
+  //     },
+  //     {
+  //       path: 'step2',
+  //       component: _import('form/pages/activePublic/step2'),
+  //       name: 'step2',
+  //       meta: {
+  //         title: 'step'
+  //       }
+  //     },
+  //     {
+  //       path: 'step3',
+  //       component: _import('form/pages/activePublic/step3'),
+  //       name: 'step3',
+  //       meta: {
+  //         title: 'step'
+  //       }
+  //     }
+  //   ]
+  // }
 ]

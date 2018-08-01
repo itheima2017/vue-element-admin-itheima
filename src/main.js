@@ -19,10 +19,11 @@ import 'font-awesome/css/font-awesome.css'
 import dashboard from '@/module-dashboard/' // 面板
 import list from '@/module-list/' // 列表页
 import form from '@/module-form/' // 表单页
+import details from '@/module-details/' // 表单页
 Vue.use(dashboard, store)
 Vue.use(list, store)
 Vue.use(form, store)
-
+Vue.use(details, store)
 /*
 * 注册 - 组件
 */
