@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sonar-scanner -X \
+sonar-scanner \
   -Dsonar.analysis.mode=preview \
   -Dsonar.projectKey=gitlab:$CI_COMMIT_REF_NAME:$CI_PROJECT_NAME \
   -Dsonar.projectName=gitlab:$CI_COMMIT_REF_NAME:$CI_PROJECT_NAME \
