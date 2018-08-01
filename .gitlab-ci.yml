@@ -1,0 +1,20 @@
+stages:
+  - sonar
+  - build
+  # - archive
+
+sonar:
+  stage: sonar
+  script:
+    - ci/sonar.sh
+  tags:
+    - hmadmin-vue
+
+build:
+  stage: build
+  services:
+    - node:8
+  script: 
+    - ci/build.sh
+  tags:
+    - hmadmin-vue
