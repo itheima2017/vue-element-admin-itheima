@@ -1,10 +1,10 @@
 stages:
-  - sonar
+  - test
   - build
-  # - archive
+  - deploy
 
-sonar_push:
-  stage: sonar
+sonar_test:
+  stage: test
   script:
     - ci/sonar.sh
   tags:
@@ -12,9 +12,18 @@ sonar_push:
 
 build_image:
   stage: build
-  services:
-    - node:8
+  # services:
+  #   - node:8
   script: 
     - ci/build.sh
+  tags:
+    - hmadmin-vue
+
+deploy_image:
+  stage: deploy
+  # services:
+  #   - node:8
+  script: 
+    - ci/deploy.sh
   tags:
     - hmadmin-vue
