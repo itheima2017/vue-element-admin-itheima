@@ -61,11 +61,11 @@
               <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="removeUser(scope.row.id)">{{$t('table.delete')}}
               </el-button>
             </template>
-            <template slot-scope="scope" v-show="showDate">
+            <!-- <template slot-scope="scope" v-show="showDate">
               <el-button type="primary" size="mini">{{$t('table.edit')}}</el-button>
               <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger">{{$t('table.delete')}}
               </el-button>
-            </template>
+            </template> -->
           </el-table-column>
         </el-table>
         <!-- end -->
@@ -258,6 +258,7 @@ export default {
       this.query()
       this.text = '创建'
       this.$refs.editUser.dialogFormV()
+      this.setupData()
     },
     // 窗口操作**********************************
     // 弹框关闭
@@ -268,6 +269,7 @@ export default {
     // 表单详情数据加载
     hanldeEditForm(objeditId) {
       this.formData.id = objeditId
+      this.setupData()
       detail({ id: objeditId }).then((data, err) => {
         var datalist = data.data
         if (err) {
@@ -317,7 +319,6 @@ export default {
   // 创建完毕状态
   created() {
     this.getList()
-    this.setupData()
     // 键盘enter操作
     var lett = this
     document.onkeydown = function(e) {

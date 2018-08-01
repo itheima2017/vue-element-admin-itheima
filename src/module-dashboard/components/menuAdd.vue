@@ -11,7 +11,7 @@
           <el-form-item :label="$t('table.permissionUser')">
               <el-select v-model="formMenu.pid">
                 <el-option :value="0" :label="$t('table.powerNav')">主导航</el-option>
-                <el-option v-for="(items) in notPointDataList" :value="items.id" :key="items.id" :disabled="(type === 'points') && !!(items.childs)" :class="'moveIn'+items.layer">
+                <el-option v-for="(items) in notPointDataList" :value="items.title" :key="items.id" :disabled="(type === 'points') && !!(items.childs)" :class="'moveIn'+items.layer">
                   <!-- <span class="ms-tree-space" v-for="item in leafCount" :key="item.id">&nbsp;</span> -->
                   <span>
                     {{ items.title }}</span>

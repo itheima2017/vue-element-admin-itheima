@@ -45,7 +45,7 @@
 </el-form>
 </template>
 <script>
-import addressData from './addressData.js'
+import addressData from './AddressData.js'
 import store from '../store/store.js'
 function formatData(data) {
   var result = []

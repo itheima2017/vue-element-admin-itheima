@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-  name: 'activePublic',
+  name: 'ActivePublic',
   data: function() {
     return {
       isRouter: false,
@@ -49,7 +49,7 @@ export default {
     },
     // 下一步
     handleNextStep: function() {
-      this.$router.push('/activePublic/step' + (this.step + 1))
+      this.$router.push('/form/step-form/step' + (this.step + 1))
       var _this = this
       setTimeout(function() {
         if (_this.isRouter) {
@@ -80,7 +80,7 @@ export default {
   mounted: function() {},
   // 创建完毕状态
   created: function() {
-    this.$router.push('/activePublic')
+    // this.$router.push('/activePublic')
   },
   // 组件更新
   updated: function() {}
@@ -123,6 +123,6 @@ export default {
   width: 100%;
 }
 .fa {
-  margin-left: 20px;
+  /* margin-left: 20px; */
 }
 </style>

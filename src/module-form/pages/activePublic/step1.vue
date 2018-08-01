@@ -80,10 +80,10 @@
 
         </el-form-item>
         <el-form-item label="活动地点" required >
-          <vAddress :province="ruleForm.province" id="address"
+          <AddressSelect :province="ruleForm.province" id="address"
               :city="ruleForm.city"
               :detail="ruleForm.detail"
-              :isAddressTrue="isAddressTrue"></vAddress>
+              :isAddressTrue="isAddressTrue"></AddressSelect>
         </el-form-item>
 
         <el-form-item label="活动人数">
@@ -152,13 +152,13 @@
     </div>
 </template>
 <script>
-import addressSelect from '../../components/address.vue'
+import AddressSelect from '../../components/address.vue'
 import store from '../../store/store.js'
 
 export default {
-  name: 'activePublic',
+  name: 'ActivePublic',
   components: {
-    vAddress: addressSelect
+    AddressSelect: AddressSelect
   },
   data: function() {
     return {
