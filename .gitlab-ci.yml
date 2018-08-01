@@ -3,14 +3,14 @@ stages:
   - build
   # - archive
 
-sonar:
+sonar_push:
   stage: sonar
   script:
     - ci/sonar.sh
   tags:
     - hmadmin-vue
 
-build:
+build_image:
   stage: build
   services:
     - node:8

@@ -1,6 +1,11 @@
 #!/bin/bash
 
-npm i --registry=https://registry.npm.taobao.org
+pwd
+ll
+
+# npm i --registry=https://registry.npm.taobao.org
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+cnpm i
 npm run build
 
 docker build -t 172.17.0.57:5000/hmadmin-vue:1.0.$CI_PIPELINE_ID .
