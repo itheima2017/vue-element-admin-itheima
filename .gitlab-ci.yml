@@ -1,17 +1,17 @@
 stages:
-  - external
+  - test
   - build
   - deploy
 
 sonar_analyze:
-  stage: external
+  stage: test
   script:
     - ci/sonar_analyze.sh
   tags:
     - hmadmin-vue
 
 sonar_preview:
-  stage: external
+  stage: test
   script:
     - ci/sonar_preview.sh
   tags:
