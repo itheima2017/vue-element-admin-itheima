@@ -1,6 +1,5 @@
 stages:
   - sonar
-  - external
   - build
   - deploy
 
@@ -15,13 +14,6 @@ sonar_preview:
   stage: sonar
   script:
     - ci/sonar_preview.sh
-  tags:
-    - hmadmin-vue
-
-sonarqube:
-  stage: external
-  script: 
-    - ls -la
   tags:
     - hmadmin-vue
 

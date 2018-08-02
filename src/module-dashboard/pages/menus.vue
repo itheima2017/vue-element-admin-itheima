@@ -110,6 +110,11 @@ export default {
           }
           return newItem
         }
+        var makeLayer = function(layer, item) {
+          layer++
+          changeAray(layer, item)
+          layer--
+        }
         var changeAray = function(layer, oldArray) {
           for (var i = 0; i < oldArray.length; i++) {
             newArray.push(makeNewItem(layer, oldArray[i]))
@@ -121,11 +126,6 @@ export default {
               makeLayer(layer, oldArray[i].points)
             }
           }
-        }
-        var makeLayer = function(layer, item) {
-          layer++
-          changeAray(layer, item)
-          layer--
         }
 
         var la = 0
