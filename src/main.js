@@ -49,8 +49,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-
-var j = 0;
-while (true) { // Noncompliant; constant end condition
-  j++;
-}
