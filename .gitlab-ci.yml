@@ -1,8 +1,8 @@
 stages:
   - sonar
+  - external
   - build
   - deploy
-  - external
 
 sonar_analyze:
   stage: sonar
@@ -15,6 +15,13 @@ sonar_preview:
   stage: sonar
   script:
     - ci/sonar_preview.sh
+  tags:
+    - hmadmin-vue
+
+sonarqube:
+  stage: external
+  script: 
+    - ls -la
   tags:
     - hmadmin-vue
 
@@ -33,12 +40,5 @@ deploy_image:
   #   - node:8
   script: 
     - ci/deploy.sh
-  tags:
-    - hmadmin-vue
-
-external_job:
-  stage: external
-  script: 
-    - ls -la
   tags:
     - hmadmin-vue
