@@ -8,6 +8,7 @@ sonar-scanner \
   -Dsonar.gitlab.project_id=$CI_PROJECT_ID \
   -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA \
   -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME \
+  -Dsonar.gitlab.failure_notification_mode=exit-mode
   -Dsonar.gitlab.only_issue_from_commit_file=false
 
 if [ $? -eq 0 ]; then
