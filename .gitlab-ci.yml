@@ -13,7 +13,7 @@ sonar_analyze:
 sonar_preview:
   stage: sonar
   script:
-    - ci/sonar.sh
+    - ci/sonar_preview.sh
   tags:
     - hmadmin-vue
 
