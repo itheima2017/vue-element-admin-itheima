@@ -5,7 +5,9 @@
 
 # 说明
 
-`黑马Admin` 的前端项目, [安装及快速开始 go!](http://itheimaadmin.itcast.cn/book/help/#/getting-started)
+`黑马Admin` 的前端项目
+
+[安装及快速开始 go!](http://itheimaadmin.itcast.cn/book/help/#/getting-started)
 
 * [在线演示](http://itheimaadmin.itcast.cn/preview/vue/dist)
 * 代码
