@@ -1,10 +1,17 @@
 stages:
-  - test
+  - sonar
   - build
   - deploy
 
-sonar_test:
-  stage: test
+sonar_analyze:
+  stage: sonar
+  script:
+    - ci/sonar_analyze.sh
+  tags:
+    - hmadmin-vue
+
+sonar_preview:
+  stage: sonar
   script:
     - ci/sonar.sh
   tags:
