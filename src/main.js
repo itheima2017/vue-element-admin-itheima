@@ -50,6 +50,7 @@ new Vue({
   components: { App }
 })
 
-var merged = arr.reduce(function(a, b) {
-  a.concat(b);
-}); // Noncompliant: No return statement
+var j = 0;
+while (true) { // Noncompliant; constant end condition
+  j++;
+}
