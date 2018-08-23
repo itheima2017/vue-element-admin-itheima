@@ -108,9 +108,9 @@
 .el-table th.is-leaf {
   border-bottom: 2px solid #e8e8e8;
 }
-.el-form-item {
+/* .el-form-item {
   margin-bottom: 0;
-}
+} */
 .disabled td {
   background-color: #f9f9f9;
   color: #c1c1c1;
@@ -126,8 +126,8 @@
 <script>
 import { simple } from '@/api/base/permissions'
 import { list, remove, detail, update, add } from '@/api/base/users'
-import PageTool from './../components/pageTool'
-import UserAdd from './../components/userAdd'
+import PageTool from './../components/page-tool'
+import UserAdd from './../components/user-add'
 export default {
   name: 'base-users',
   components: {

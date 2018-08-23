@@ -63,7 +63,7 @@
 </style>
 <script>
 // import { list } from '@/api/base/logs'
-import PageTool from './../components/pageTool'
+import PageTool from './../components/page-tool'
 import {list} from '@/api/example/table'
 export default {
   name: 'base-logs',

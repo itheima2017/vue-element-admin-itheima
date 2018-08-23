@@ -32,7 +32,7 @@
 
 <script>
 import treeTable from '@/components/TreeTable/index.vue'
-import MenuAdd from './../components/menuAdd'
+import MenuAdd from './../components/menu-add'
 import { list, remove, detail, update, add } from '@/api/base/menus'
 let _this = []
 export default {

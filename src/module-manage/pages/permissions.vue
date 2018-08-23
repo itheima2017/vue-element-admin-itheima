@@ -62,13 +62,13 @@
           v-on:handleCloseModal="handleCloseModal">
       </component>
       <!-- 高级接口权限弹层 -->
-      <component v-bind:is="permissionsApiAdd"
+      <!-- <component v-bind:is="permissionsApiAdd"
           :apiTitle='apiTitle'
           ref="editPermissionApi" 
           :formData.sync='requestParameters'
           :ruleInline='ruleInline'
           v-on:handleCloseModal="handleCloseModal">
-      </component>
+      </component> -->
       </el-card>
      </div>
   </div>
@@ -93,14 +93,14 @@
 </style>
 <script>
 import { list, remove, detail, update, add } from '@/api/base/permissions'
-import PageTool from './../components/pageTool'
-import PermissionsAdd from './../components/permissionsAdd'
-import permissionsApiAdd from './../components/permissionsApiAdd'
+import PageTool from './../components/page-tool'
+import PermissionsAdd from './../components/permissions-add'
+// import permissionsApiAdd from './../components/permissionsApi-add'
 export default {
   name: 'base-permissions',
   components: {
     PermissionsAdd,
-    permissionsApiAdd,
+    // permissionsApiAdd,
     PageTool
   },
   data() {

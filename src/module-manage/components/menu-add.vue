@@ -11,10 +11,7 @@
           <el-form-item :label="$t('table.permissionUser')">
               <el-select v-model="formMenu.pid">
                 <el-option :value="0" :label="$t('table.powerNav')">主导航</el-option>
-                <el-option v-for="(items) in notPointDataList" :value="items.title" :key="items.id" :disabled="(type === 'points') && !!(items.childs)" :class="'moveIn'+items.layer">
-                  <!-- <span class="ms-tree-space" v-for="item in leafCount" :key="item.id">&nbsp;</span> -->
-                  <span>
-                    {{ items.title }}</span>
+                <el-option v-for="(items) in notPointDataList" :value="items.id" :key="items.id" :label="items.title" :disabled="(type === 'points') && !!(items.childs)" :class="'moveIn'+items.layer">
                 </el-option>
               </el-select>
 
@@ -162,7 +159,7 @@ export default {
       }
       this.typeStatus = true
     },
-    changeAray() {
+    changeArays() {
       var changeAray = oldArray => {
         for (var i = 0; i < oldArray.length; i++) {
           // 数据没有code并且没有子元素时
@@ -181,7 +178,7 @@ export default {
       _this.showMenuBlock = true
       _this.showPointBlock = false
       _this.notPointDataList = []
-      this.changeAray()
+      this.changeArays()
     },
     changeToPoints() {
       _this.showMenuBlock = false
@@ -191,7 +188,7 @@ export default {
       _this.formMenu.code = _this.formPoints.code
       _this.formMenu.title = _this.formPoints.title
       _this.notPointDataList = []
-      this.changeAray()
+      this.changeArays()
     },
     // 退出
     handleClose() {
@@ -254,10 +251,7 @@ export default {
     // 表单详情
     dataRest(obj) {
       for (var i = 0; i < obj.length; i++) {
-        if (
-          obj[i].childs &&
-          obj[i].childs.length > 0
-        ) {
+        if (obj[i].childs && obj[i].childs.length > 0) {
           for (var j = 0; j < obj[i].childs.length; j++) {
             this.$set(obj[i].childs[j], 'layer', 1)
           }
@@ -272,10 +266,9 @@ export default {
         _this.parentDataList = data.data
         _this.notPointDataList = []
         this.dataRest(data.data)
-        this.changeAray()
+        this.changeArays()
       })
       detail({ id: objeditId }).then(data => {
-        // console.log(data.data)
         this.formMenu.id = data.data.id
         this.formMenu.pid = data.data.pid
         this.formMenu.title = data.data.title
@@ -286,7 +279,7 @@ export default {
         if (choose === 'points') {
           this.formMenu.code = data.data.code
         }
-        if (!('pid' in responseData)) {
+        if (responseData.pid === null) {
           this.formMenu.pid = 0
         }
       })
