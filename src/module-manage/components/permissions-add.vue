@@ -19,7 +19,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="handleClose">{{$t('table.cancel')}}</el-button>
-          <el-button type="primary" @click="handleAdd('formBase')">{{$t('table.confirm')}}</el-button>
+          <el-button type="primary" @click="handleAddForm('formBase')">{{$t('table.confirm')}}</el-button>
         </div>
   </el-dialog>
   
@@ -151,8 +151,7 @@ export default {
     handleCheckChange(data, checked, indeterminate) {
       this.treeCheckedNodes = checked.checkedNodes
     },
-    // 表单提交
-    handleAdd(object) {
+    handleAddForm(object) {
       let curPermissions = []
       let nodesPath = []
       function parseNodes(nodes, findId) {
