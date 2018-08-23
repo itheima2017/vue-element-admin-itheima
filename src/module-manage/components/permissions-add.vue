@@ -183,13 +183,15 @@ export default {
       // console.log(this.$refs.treeMenu.getCheckedNodes())
       if (this.treeCheckedNodes.length === 0) {
         this.treeCheckedNodes = this.$refs.treeMenu.getCheckedNodes()
+      } else {
+        for (let it of this.treeCheckedNodes) {
+          // console.log(` > id:${it.id} , title:${it.title}`)
+          it.checked = true
+          nodesPath = []
+          parseNodes(this.PermissionGroupsmenu, it.id)
+        }
       }
-      for (let it of this.treeCheckedNodes) {
-        // console.log(` > id:${it.id} , title:${it.title}`)
-        it.checked = true
-        nodesPath = []
-        parseNodes(this.PermissionGroupsmenu, it.id)
-      }
+
       var curPerLenth = curPermissions.length
       // console.log(`curPermissions: ${curPermissions}`)
       if (curPerLenth === 0 && this.formBase.id) {
@@ -241,7 +243,6 @@ export default {
         }
       })
     }
-    
   },
   // 挂载结束
 
