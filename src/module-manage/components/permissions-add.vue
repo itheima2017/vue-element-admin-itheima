@@ -156,7 +156,7 @@ export default {
       let curPermissions = []
       let nodesPath = []
       function parseNodes(nodes, findId) {
-        for (let it of nodes) {
+        nodes.map(function(it,index){
           nodesPath.push(it)
           let isFind = false
           if (findId === it.id) {
@@ -170,20 +170,54 @@ export default {
             !isFind
           ) {
             isFind = parseNodes(it.points, findId)
-          } else {
           }
           if (isFind) {
-            for (let item of nodesPath) {
-              if (curPermissions.indexOf(item.id) === -1) {
-                curPermissions.push(findId)
-              }
-            }
+            nodeDate()
             nodesPath = []
             return isFind
           }
+          function nodeDate(){
+            nodesPath.map(function(item,index){
+              if (curPermissions.indexOf(item.id) === -1) {
+                curPermissions.push(findId)
+              }
+            })
+            // for (let item of nodesPath) {
+            //   if (curPermissions.indexOf(item.id) === -1) {
+            //     curPermissions.push(findId)
+            //   }
+            // }
+          }
           nodesPath.pop()
-          // return isFind
-        }
+        })
+        // for (let it of nodes) {
+        //   nodesPath.push(it)
+        //   let isFind = false
+        //   if (findId === it.id) {
+        //     isFind = true
+        //   }
+        //   if (it.childs !== undefined && it.childs.length > 0 && !isFind) {
+        //     isFind = parseNodes(it.childs, findId)
+        //   } else if (
+        //     it.points !== undefined &&
+        //     it.points.length > 0 &&
+        //     !isFind
+        //   ) {
+        //     isFind = parseNodes(it.points, findId)
+        //   } else {
+        //   }
+        //   if (isFind) {
+        //     for (let item of nodesPath) {
+        //       if (curPermissions.indexOf(item.id) === -1) {
+        //         curPermissions.push(findId)
+        //       }
+        //     }
+        //     nodesPath = []
+        //     return isFind
+        //   }
+        //   nodesPath.pop()
+        //   // return isFind
+        // }
       }
       // console.log(this.$refs.treeMenu.getCheckedNodes())
       if (this.treeCheckedNodes.length === 0) {
