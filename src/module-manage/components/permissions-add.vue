@@ -161,6 +161,8 @@ export default {
           let isFind = false
           if (findId === it.id) {
             isFind = true
+          } else {
+            isFind = false
           }
           if (it.childs !== undefined && it.childs.length > 0 && !isFind) {
             isFind = parseNodes(it.childs, findId)
@@ -176,6 +178,7 @@ export default {
             nodeDate()
             nodesPath = []
             return isFind
+          } else {
           }
           function nodeDate() {
             nodesPath.map(function(item, index) {
@@ -190,19 +193,19 @@ export default {
       // console.log(this.$refs.treeMenu.getCheckedNodes())
       if (this.treeCheckedNodes.length === 0) {
         this.treeCheckedNodes = this.$refs.treeMenu.getCheckedNodes()
-      }
-      for (let it of this.treeCheckedNodes) {
-        // console.log(` > id:${it.id} , title:${it.title}`)
-        it.checked = true
-        nodesPath = []
-        parseNodes(this.PermissionGroupsmenu, it.id)
+      } else {
+        for (let it of this.treeCheckedNodes) {
+          // console.log(` > id:${it.id} , title:${it.title}`)
+          it.checked = true
+          nodesPath = []
+          parseNodes(this.PermissionGroupsmenu, it.id)
+        }
       }
       // console.log(`curPermissions: ${curPermissions}`)
       if (curPermissions.length === 0 && this.formBase.id) {
         curPermissions = this.formBase.permissions
-      }
-      // console.log(`curPermissions: ${curPermissions}`)
-      if (!curPermissions.length) {
+      } else if (!curPermissions.length) {
+        // console.log(`curPermissions: ${curPermissions}`)
         this.$message({
           showClose: true,
           message: '请选择需要的权限及页面权限点',
