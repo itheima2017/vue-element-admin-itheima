@@ -192,8 +192,7 @@ export default {
         this.treeCheckedNodes = this.$refs.treeMenu.getCheckedNodes()
       }
       for (let it of this.treeCheckedNodes) {
-        console.log(` > id:${it.id} , title:${it.title}`)
-        
+        // console.log(` > id:${it.id} , title:${it.title}`)
         it.checked = true
         nodesPath = []
         parseNodes(this.PermissionGroupsmenu, it.id)
@@ -214,24 +213,24 @@ export default {
         this.$refs['dataForm'].validate(valid => {
           if (valid) {
             this.$emit('handleCloseModal')
-            // if (_this.formBase.id) {
-            //   let technologyTypes = []
-            //   var data = {
-            //     id: this.formBase.id,
-            //     title: this.formBase.title,
-            //     permissions: curPermissions
-            //   }
-            //   update(data).then(() => {
-            //     this.$emit('newDataes', this.formBase)
-            //   })
-            // } else {
-            //   add({
-            //     title: this.formBase.title,
-            //     permissions: curPermissions
-            //   }).then(() => {
-            //     this.$emit('newDataes', this.formBase)
-            //   })
-            // }
+            if (_this.formBase.id) {
+              let technologyTypes = []
+              var data = {
+                id: this.formBase.id,
+                title: this.formBase.title,
+                permissions: curPermissions
+              }
+              update(data).then(() => {
+                this.$emit('newDataes', this.formBase)
+              })
+            } else {
+              add({
+                title: this.formBase.title,
+                permissions: curPermissions
+              }).then(() => {
+                this.$emit('newDataes', this.formBase)
+              })
+            }
           } else {
             this.$Message.error('*号为必填项!')
           }
