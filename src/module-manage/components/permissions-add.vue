@@ -19,7 +19,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="handleClose">{{$t('table.cancel')}}</el-button>
-          <el-button type="primary" @click="handleAddForm('formBase')">{{$t('table.confirm')}}</el-button>
+          <el-button type="primary" @click="handleAdd('formBase')">{{$t('table.confirm')}}</el-button>
         </div>
   </el-dialog>
   
@@ -151,7 +151,8 @@ export default {
     handleCheckChange(data, checked, indeterminate) {
       this.treeCheckedNodes = checked.checkedNodes
     },
-    handleAddForm(object) {
+    // 表单提交
+    handleAdd(object) {
       let curPermissions = []
       let nodesPath = []
       function parseNodes(nodes, findId) {
@@ -185,6 +186,7 @@ export default {
           }
           nodesPath.pop()
         })
+
       }
       // console.log(this.$refs.treeMenu.getCheckedNodes())
       if (this.treeCheckedNodes.length === 0) {
@@ -209,32 +211,35 @@ export default {
         })
         // return
       } else {
-        this.$refs['dataForm'].validate(valid => {
-          if (valid) {
-            this.$emit('handleCloseModal')
-            if (_this.formBase.id) {
-              let technologyTypes = []
-              var data = {
-                id: this.formBase.id,
-                title: this.formBase.title,
-                permissions: curPermissions
-              }
-              update(data).then(() => {
-                this.$emit('newDataes', this.formBase)
-              })
-            } else {
-              add({
-                title: this.formBase.title,
-                permissions: curPermissions
-              }).then(() => {
-                this.$emit('newDataes', this.formBase)
-              })
-            }
-          } else {
-            this.$Message.error('*号为必填项!')
-          }
-        })
+        this.dataFormSub(curPermissions)
       }
+    },
+    dataFormSub(curPermis) {
+      this.$refs['dataForm'].validate(valid => {
+        if (valid) {
+          this.$emit('handleCloseModal')
+          if (_this.formBase.id) {
+            let technologyTypes = []
+            var data = {
+              id: this.formBase.id,
+              title: this.formBase.title,
+              permissions: curPermis
+            }
+            update(data).then(() => {
+              this.$emit('newDataes', this.formBase)
+            })
+          } else {
+            add({
+              title: this.formBase.title,
+              permissions: curPermis
+            }).then(() => {
+              this.$emit('newDataes', this.formBase)
+            })
+          }
+        } else {
+          this.$Message.error('*号为必填项!')
+        }
+      })
     }
   },
   // 挂载结束
