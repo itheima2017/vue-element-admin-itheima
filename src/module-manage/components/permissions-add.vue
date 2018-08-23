@@ -235,31 +235,31 @@ export default {
         })
         // return
       } else {
-        // this.$refs['dataForm'].validate(valid => {
-        //   if (valid) {
-        //     this.$emit('handleCloseModal')
-        //     if (_this.formBase.id) {
-        //       let technologyTypes = []
-        //       var data = {
-        //         id: this.formBase.id,
-        //         title: this.formBase.title,
-        //         permissions: curPermissions
-        //       }
-        //       update(data).then(() => {
-        //         this.$emit('newDataes', this.formBase)
-        //       })
-        //     } else {
-        //       add({
-        //         title: this.formBase.title,
-        //         permissions: curPermissions
-        //       }).then(() => {
-        //         this.$emit('newDataes', this.formBase)
-        //       })
-        //     }
-        //   } else {
-        //     this.$Message.error('*号为必填项!')
-        //   }
-        // })
+        this.$refs['dataForm'].validate(valid => {
+          if (valid) {
+            this.$emit('handleCloseModal')
+            if (_this.formBase.id) {
+              let technologyTypes = []
+              var data = {
+                id: this.formBase.id,
+                title: this.formBase.title,
+                permissions: curPermissions
+              }
+              update(data).then(() => {
+                this.$emit('newDataes', this.formBase)
+              })
+            } else {
+              add({
+                title: this.formBase.title,
+                permissions: curPermissions
+              }).then(() => {
+                this.$emit('newDataes', this.formBase)
+              })
+            }
+          } else {
+            this.$Message.error('*号为必填项!')
+          }
+        })
       }
     }
   },
