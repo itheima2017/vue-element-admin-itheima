@@ -152,28 +152,33 @@ export default {
       this.treeCheckedNodes = checked.checkedNodes
     },
     // 表单提交
-    handleAdd(object) {
+    handleAdd:function(object) {
       let curPermissions = []
       let nodesPath = []
       function parseNodes(nodes, findId) {
-        nodes.map(function(it, index) {
+        nodes.map(function(it,index){
           nodesPath.push(it)
           let isFind = false
-          if (findId === it.id) isFind = true
+          if (findId === it.id) {
+            isFind = true
+          }
           if (it.childs !== undefined && it.childs.length > 0 && !isFind) {
             isFind = parseNodes(it.childs, findId)
-          } else if (
+          }
+          if (
             it.points !== undefined &&
             it.points.length > 0 &&
             !isFind
           ) {
             isFind = parseNodes(it.points, findId)
           }
-          if (isFind) nodeDate()
-                      nodesPath = []
-                      return isFind
-          function nodeDate() {
-            nodesPath.map(function(item, index) {
+          if (isFind) {
+            nodeDate()
+            nodesPath = []
+            return isFind
+          }
+          function nodeDate(){
+            nodesPath.map(function(item,index){
               if (curPermissions.indexOf(item.id) === -1) {
                 curPermissions.push(findId)
               }
