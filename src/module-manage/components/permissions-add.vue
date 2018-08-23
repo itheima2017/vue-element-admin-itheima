@@ -173,20 +173,12 @@ export default {
           } else {
           }
           if (isFind) {
-            nodeDate()
+            _this.nodeDate(nodesPath, curPermissions, findId)
             nodesPath = []
             return isFind
           }
-          function nodeDate() {
-            nodesPath.map(function(item, index) {
-              if (curPermissions.indexOf(item.id) === -1) {
-                curPermissions.push(findId)
-              }
-            })
-          }
           nodesPath.pop()
         })
-
       }
       // console.log(this.$refs.treeMenu.getCheckedNodes())
       if (this.treeCheckedNodes.length === 0) {
@@ -198,12 +190,13 @@ export default {
         nodesPath = []
         parseNodes(this.PermissionGroupsmenu, it.id)
       }
+      var curPerLenth = curPermissions.length
       // console.log(`curPermissions: ${curPermissions}`)
-      if (curPermissions.length === 0 && this.formBase.id) {
+      if (curPerLenth === 0 && this.formBase.id) {
         curPermissions = this.formBase.permissions
       }
       // console.log(`curPermissions: ${curPermissions}`)
-      if (!curPermissions.length) {
+      if (!curPerLenth) {
         this.$message({
           showClose: true,
           message: '请选择需要的权限及页面权限点',
@@ -213,6 +206,13 @@ export default {
       } else {
         this.dataFormSub(curPermissions)
       }
+    },
+    nodeDate(nodesPath, curPermissions, findId) {
+      nodesPath.map(function(item, index) {
+        if (curPermissions.indexOf(item.id) === -1) {
+          curPermissions.push(findId)
+        }
+      })
     },
     dataFormSub(curPermis) {
       this.$refs['dataForm'].validate(valid => {
@@ -241,6 +241,7 @@ export default {
         }
       })
     }
+    
   },
   // 挂载结束
 
