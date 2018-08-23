@@ -193,7 +193,6 @@ export default {
       this.items = []
       list({page, limit})
         .then(res => {
-          console.log(res.data)
           this.items = res.data.items
           this.pagination.total = res.data.total
           this.barSearch.alertText = `共 ${this.pagination.total} 条记录`

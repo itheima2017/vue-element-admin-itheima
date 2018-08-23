@@ -17,13 +17,17 @@ import 'font-awesome/css/font-awesome.css'
 * 注册 - 业务模块
 */
 import dashboard from '@/module-dashboard/' // 面板
+import base from '@/module-manage/' // 用户管理
 import list from '@/module-list/' // 列表页
 import form from '@/module-form/' // 表单页
 import details from '@/module-details/' // 表单页
+
 Vue.use(dashboard, store)
+Vue.use(base, store)
 Vue.use(list, store)
 Vue.use(form, store)
 Vue.use(details, store)
+
 /*
 * 注册 - 组件
 */
