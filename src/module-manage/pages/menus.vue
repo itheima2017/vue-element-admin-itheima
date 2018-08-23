@@ -115,7 +115,7 @@ export default {
           changeAray(layer, item)
           layer--
         }
-        var changeAray = function(layer, oldArray) {
+        function changeAray(layer, oldArray) {
           for (var i = 0; i < oldArray.length; i++) {
             newArray.push(makeNewItem(layer, oldArray[i]))
 
