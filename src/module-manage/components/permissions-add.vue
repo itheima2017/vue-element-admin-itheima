@@ -46,7 +46,8 @@ export default {
         create_date: '',
         title: '',
         permissions: []
-      }
+      },
+      curPermissions: []
     }
   },
   computed: {
@@ -151,8 +152,7 @@ export default {
     handleCheckChange(data, checked, indeterminate) {
       this.treeCheckedNodes = checked.checkedNodes
     },
-    // 表单提交
-    handleAdd(object) {
+    parseN() {
       let curPermissions = []
       let nodesPath = []
       function parseNodes(nodes, findId) {
@@ -190,10 +190,49 @@ export default {
         nodesPath = []
         parseNodes(this.PermissionGroupsmenu, it.id)
       }
-      var curPerLenth = curPermissions.length
+      this.curPermissions = curPermissions
+    },
+    // 表单提交
+    handleAdd(object) {
+      // let curPermissions = []
+      // let nodesPath = []
+      // function parseNodes(nodes, findId) {
+      //   nodes.map(function(it, index) {
+      //     nodesPath.push(it)
+      //     let isFind = false
+      //     if (findId === it.id) {
+      //       isFind = true
+      //     }
+      //     if (it.childs !== undefined && it.childs.length > 0 && !isFind) {
+      //       isFind = parseNodes(it.childs, findId)
+      //     } else if (it.points !== undefined && it.points.length > 0 && !isFind
+      //     ) {
+      //       isFind = parseNodes(it.points, findId)
+      //     } else {
+      //     }
+      //     if (isFind) {
+      //       _this.nodeDate(nodesPath, curPermissions, findId)
+      //       nodesPath = []
+      //       return isFind
+      //     }
+      //     nodesPath.pop()
+      //   })
+      // }
+      // // console.log(this.$refs.treeMenu.getCheckedNodes())
+      // if (this.treeCheckedNodes.length === 0) {
+      //   this.treeCheckedNodes = this.$refs.treeMenu.getCheckedNodes()
+      // }
+      // for (let it of this.treeCheckedNodes) {
+      //   // console.log(` > id:${it.id} , title:${it.title}`)
+      //   it.checked = true
+      //   nodesPath = []
+      //   parseNodes(this.PermissionGroupsmenu, it.id)
+      // }
+      this.parseN()
+      var curPerLenth = this.curPermissions.length
       // console.log(`curPermissions: ${curPermissions}`)
       if (curPerLenth === 0 && this.formBase.id) {
-        curPermissions = this.formBase.permissions
+        this.curPermissions = this.formBase.permissions
       }
       // console.log(`curPermissions: ${curPermissions}`)
       if (!curPerLenth) {
@@ -204,7 +243,7 @@ export default {
         })
         // return
       } else {
-        this.dataFormSub(curPermissions)
+        this.dataFormSub(this.curPermissions)
       }
     },
     nodeDate(nodesPath, curPermissions, findId) {
@@ -241,7 +280,6 @@ export default {
         }
       })
     }
-    
   },
   // 挂载结束
 
